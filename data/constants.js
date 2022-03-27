@@ -77,6 +77,7 @@ const CHAINS_ID = {
   ETH_ROPSTEN: '3',
   BSC_MAINNET: '56',
   MATIC_MAINNET: '137',
+  ARBITRUM_ONE: '42161',
 }
 
 const GET_PRICE_TYPES = {
