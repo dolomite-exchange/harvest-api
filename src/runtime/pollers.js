@@ -39,6 +39,8 @@ const getProfitSharingFactor = chain => {
       return 0.92
     case CHAIN_TYPES.MATIC:
       return 0.92
+    case CHAIN_TYPES.ARBITRUM_ONE:
+      return 0.75
     default:
       return 0.7
   }
@@ -198,6 +200,7 @@ const getPools = async () => {
   let fetchedBSCPools = [],
     fetchedETHPools = [],
     fetchedMATICPools = [],
+    fetchedARBITRUMPools = [],
     fetchedPools = [],
     hasErrors
 
@@ -235,6 +238,24 @@ const getPools = async () => {
 
     console.log('-- Done getting MATIC pool data --\n')
 
+    console.log('\n-- Getting ARBITRUM pool data --')
+
+    const arbitrumPoolBatches = chunk(
+      pools.filter(pool => pool.chain === CHAIN_TYPES.ARBITRUM),
+      GET_POOL_DATA_BATCH_SIZE,
+    )
+
+    if (size(arbitrumPoolBatches)) {
+      await forEach(arbitrumPoolBatches, async poolBatch => {
+        const poolData = await getPoolsData(poolBatch)
+        fetchedARBITRUMPools = fetchedARBITRUMPools.concat(poolData)
+      })
+    } else {
+      console.log('No pools available')
+    }
+
+    console.log('-- Done getting ARBITRUM pool data --\n')
+
     console.log('\n-- Getting ETH pool data --')
 
     const ethPoolBatches = chunk(
@@ -259,6 +280,7 @@ const getPools = async () => {
     bsc: fetchedBSCPools,
     eth: fetchedETHPools,
     matic: fetchedMATICPools,
+    arbitrum: fetchedARBITRUMPools,
   }
   hasErrors =
     (isArray(fetchedBSCPools) &&
@@ -266,7 +288,9 @@ const getPools = async () => {
     (isArray(fetchedETHPools) &&
       (fetchedETHPools.includes(undefined) || fetchedETHPools.includes(null))) ||
     (isArray(fetchedMATICPools) &&
-      (fetchedMATICPools.includes(undefined) || fetchedMATICPools.includes(null)))
+      (fetchedMATICPools.includes(undefined) || fetchedMATICPools.includes(null))) ||
+    (isArray(fetchedARBITRUMPools) &&
+      (fetchedARBITRUMPools.includes(undefined) || fetchedARBITRUMPools.includes(null)))
 
   await storeData(
     Cache,

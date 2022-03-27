@@ -168,12 +168,16 @@ const CHAIN_TYPES = {
   ETH: '1',
   BSC: '56',
   MATIC: '137',
+  ARBITRUM_ONE: '42161',
 }
 
 const BSC_RPC_URL = process.env.BSC_RPC_URL || 'https://bsc-dataseed2.binance.org/'
 const MATIC_RPC_URL =
   process.env.MATIC_RPC_URL ||
   `https://polygon-mainnet.infura.io/v3/${process.env.MATIC_INFURA_KEY}`
+const ARBITRUM_RPC_URL =
+  process.env.ARBITRUM_RPC_URL ||
+  `https://arbitrum-mainnet.infura.io/v3/${process.env.ARBITRUM_INFURA_KEY}`
 
 const VENUS_API_URL = 'https://api.venus.io/api/governance/venus'
 const BDO_API_URL = 'https://api.bdollar.fi/api/bdollar/'
@@ -270,6 +274,7 @@ module.exports = {
   UI_DATA_FILES,
   UI_DATA_CACHE_TTL,
   MATIC_RPC_URL,
+  ARBITRUM_RPC_URL,
   TRADING_APY_TYPES,
   BALANCER_SUBGRAPH_URLS,
   STAKEWISE_API_URLS,

@@ -31,6 +31,8 @@ const getPlatformId = chain => {
       return 'binance-smart-chain'
     case CHAIN_TYPES.MATIC:
       return 'polygon-pos'
+    case CHAIN_TYPES.ARBITRUM_ONE:
+      return 'arbitrum-one'
     default:
       return 'ethereum'
   }
