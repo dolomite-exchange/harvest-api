@@ -95,6 +95,10 @@ const getIncentivePoolStats = async (
   }
 }
 
+const isPotPool = pool => {
+  return size(pool.rewardTokens) >= 2 || pool.chain === CHAIN_TYPES.ARBITRUM_ONE
+}
+
 const getPoolStatsPerType = async (pool, poolContractData, lpTokenData, weeklyReward, fresh) => {
   let cachedStats
 
@@ -120,7 +124,7 @@ const getPoolStatsPerType = async (pool, poolContractData, lpTokenData, weeklyRe
           undefined,
           undefined,
           rewardTokenAddress,
-          size(pool.rewardTokens) >= 2,
+          isPotPool(pool),
         )
         if (pool.chain === CHAIN_TYPES.ETH) {
           poolStats.apy = getWeeklyCompound(poolStats.apr)
@@ -136,7 +140,7 @@ const getPoolStatsPerType = async (pool, poolContractData, lpTokenData, weeklyRe
           undefined,
           undefined,
           rewardTokenAddress,
-          size(pool.rewardTokens) >= 2,
+          isPotPool(pool),
         )
 
         if (rewardTokenAddress === addresses.iFARM) {
@@ -231,7 +235,7 @@ const getPoolStatsPerType = async (pool, poolContractData, lpTokenData, weeklyRe
           weeklyRewardRateOverride,
           undefined,
           rewardTokenAddress,
-          size(pool.rewardTokens) >= 2,
+          isPotPool(pool),
         )
         poolStats.apy = getWeeklyCompound(poolStats.apr)
         break
@@ -270,4 +274,5 @@ const getPoolStatsPerType = async (pool, poolContractData, lpTokenData, weeklyRe
 module.exports = {
   getPoolStatsPerType,
   getIncentivePoolStats,
+  isPotPool,
 }

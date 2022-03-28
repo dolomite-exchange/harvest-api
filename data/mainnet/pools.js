@@ -3195,7 +3195,7 @@ module.exports = [
     rewardTokens: [addresses.iFARM],
     rewardTokenSymbols: ['iFARM'],
     tradingApyFunction: {
-      type: TRADING_APY_TYPES.CONVEX,
+      type: TRADING_APY_TYPES.LP,
       params: ['link'],
     },
     stakeAndDepositHelpMessage: `
@@ -5948,7 +5948,7 @@ module.exports = [
     contractAddress: addresses.ARBITRUM_ONE.crv_tri_crypto.NewPool,
     collateralAddress: addresses.ARBITRUM_ONE.crv_tri_crypto.NewVault,
     rewardAPY: [],
-    rewardTokens: [addresses.ARBITRUM_ONE.aiFARM],
+    rewardTokens: [addresses.iFARM],
     rewardTokenSymbols: ['iFARM'],
     stakeAndDepositHelpMessage: `
       <div class="help-message">
@@ -5972,5 +5972,9 @@ module.exports = [
         </ol>
       </div>
    `,
+    tradingApyFunction: {
+      type: TRADING_APY_TYPES.ARBITRUM_CURVE,
+      params: ['tricrypto'],
+    },
   },
 ]

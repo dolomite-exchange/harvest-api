@@ -241,7 +241,7 @@ const getPools = async () => {
     console.log('\n-- Getting ARBITRUM pool data --')
 
     const arbitrumPoolBatches = chunk(
-      pools.filter(pool => pool.chain === CHAIN_TYPES.ARBITRUM),
+      pools.filter(pool => pool.chain === CHAIN_TYPES.ARBITRUM_ONE),
       GET_POOL_DATA_BATCH_SIZE,
     )
 
