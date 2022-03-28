@@ -12,6 +12,7 @@ const executeTradingApyFunction = async (type, params) => {
   let implementation
   const transformedType = type.toLowerCase().replace(/_/g, '-')
   try {
+    // eslint-disable-next-line
     implementation = require(`./implementations/${transformedType}.js`)
   } catch (e) {
     console.error(
