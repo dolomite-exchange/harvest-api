@@ -11,6 +11,8 @@ const initDb = async () => {
         useNewUrlParser: true,
         retryWrites: false,
         useUnifiedTopology: true,
+        user: '',
+        pass: '',
       },
     )
     console.log('Connected to Mongo!')
