@@ -5941,4 +5941,36 @@ module.exports = [
       </div>
    `,
   },
+  {
+    chain: CHAINS_ID.ARBITRUM_ONE,
+    id: 'crv_tri_crypto',
+    type: POOL_TYPES.INCENTIVE,
+    contractAddress: addresses.ARBITRUM_ONE.crv_tri_crypto.NewPool,
+    collateralAddress: addresses.ARBITRUM_ONE.crv_tri_crypto.NewVault,
+    rewardAPY: [],
+    rewardTokens: [addresses.ARBITRUM_ONE.aiFARM],
+    rewardTokenSymbols: ['iFARM'],
+    stakeAndDepositHelpMessage: `
+      <div class="help-message">
+        <b>Deposit and stake:</b>
+        <ol class="numeric-list">
+          <li>
+            Go to&nbsp;
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://app.sushi.com/swap"
+            >
+             Sushiswap
+            </a>
+            and swap assets to <b>YEL</b>
+          </li>
+          <li>
+            Go back to this vault, hit &quot;MAX&quot; and then &quot;Deposit&quot;. Leave
+            &quot;Stake for rewards&quot; checked for staking
+          </li>
+        </ol>
+      </div>
+   `,
+  },
 ]

@@ -1987,5 +1987,22 @@
         "useMsigProfitCalculation": true
       }
     }
+  },
+  "ARBITRUM_ONE": {
+    "aiFARM": "0x9dCA587dc65AC0a043828B0acd946d71eb8D46c1",
+    "crv_tri_crypto": {
+      "Underlying": "0x8e0B8c8BB9db49a46697F3a5Bb8A308e744821D2",
+      "NewVault": "0xcF1F62c17fcd5027d6810D76697F228FE44074FD",
+      "StrategyContract": "TriCryptoStrategyMainnet",
+      "NewStrategy": "0xa603Ee4c897d5C241f22A2541f07415F0d5d0618",
+      "NewPool": "0xe87BD4EeBb65238809913E93EEbA2CC22Dbd0526",
+      "RewardPool": "0x97E2768e8E73511cA874545DC5Ff8067eB19B787",
+      "useMsigProfitCalculation": true
+    },
+    "aTriCryptoPool": "0x960ea3e3C7FB317332d990873d354E18d7645590",
+    "aTriCryptoToken": "0x8e0B8c8BB9db49a46697F3a5Bb8A308e744821D2",
+    "aUSDT": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+    "aWBTC": "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+    "aETH": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
   }
 }
