@@ -52,6 +52,7 @@ const getVaults = async () => {
   let fetchedETHVaults = [],
     fetchedBSCVaults = [],
     fetchedMATICVaults = [],
+    fetchedARBITRUMVaults = [],
     fetchedVaults,
     hasErrors = false
 
@@ -69,6 +70,13 @@ const getVaults = async () => {
 
   const maticVaultsBatches = chunk(
     Object.keys(tokensWithVault).filter(tokenId => tokens[tokenId].chain === CHAIN_TYPES.MATIC),
+    GET_VAULT_DATA_BATCH_SIZE,
+  )
+
+  const arbitrumVaultsBatches = chunk(
+    Object.keys(tokensWithVault).filter(
+      tokenId => tokens[tokenId].chain === CHAIN_TYPES.ARBITRUM_ONE,
+    ),
     GET_VAULT_DATA_BATCH_SIZE,
   )
 
@@ -98,6 +106,19 @@ const getVaults = async () => {
   })
   console.log('\n-- Done getting MATIC vaults data --')
 
+  console.log('\n-- Getting ARBITRUM vaults data --')
+  await forEach(arbitrumVaultsBatches, async batch => {
+    try {
+      console.log('Getting vault data for: ', batch)
+      const vaultsData = await getVaultsData(batch)
+      fetchedARBITRUMVaults = fetchedARBITRUMVaults.concat(vaultsData)
+    } catch (err) {
+      hasErrors = true
+      console.error(`Failed to get vault data for: ${batch}`, err)
+    }
+  })
+  console.log('\n-- Done getting ARBITRUM vaults data --')
+
   console.log('\n-- Getting ETH vaults data --')
   await forEach(ethVaultsBatches, async batch => {
     try {
@@ -121,6 +142,10 @@ const getVaults = async () => {
       return acc
     }, {}),
     matic: fetchedMATICVaults.reduce((acc, vault) => {
+      acc[vault.id] = vault
+      return acc
+    }, {}),
+    arbitrum: fetchedARBITRUMVaults.reduce((acc, vault) => {
       acc[vault.id] = vault
       return acc
     }, {}),
