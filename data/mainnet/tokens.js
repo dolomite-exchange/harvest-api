@@ -6616,6 +6616,9 @@ module.exports = {
         ],
       },
     ],
+    apyIconUrls: ['./icons/curve.png'],
+    apyTokenSymbols: ['CRV'],
+    cmcRewardTokenSymbols: ['iFARM', 'CRV'],
   },
   aUSDT: {
     chain: CHAINS_ID.ARBITRUM_ONE,
