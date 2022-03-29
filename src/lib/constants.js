@@ -95,7 +95,7 @@ const ENDPOINT_TYPES = {
 }
 
 const CORS_SETTINGS = {
-  origin: ['http://localhost:3000']
+  origin: ['http://localhost:3000', 'http://localhost:3001']
     .concat(process.env.CORS_STRINGS ? process.env.CORS_STRINGS.split(';') : [])
     .concat(
       process.env.CORS_REGEXPS
