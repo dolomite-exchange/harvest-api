@@ -21,7 +21,6 @@ const { getTradingApy } = require('../vaults/trading-apys')
 const { Cache } = require('../lib/db/models/cache')
 const { getPoolStatsPerType, getIncentivePoolStats, isPotPool } = require('./utils')
 const { getTokenPrice } = require('../prices')
-const { CHAINS_ID } = require('../../data/constants')
 
 const fetchAndExpandPool = async pool => {
   if (DEBUG_MODE) {
@@ -31,7 +30,6 @@ const fetchAndExpandPool = async pool => {
   const web3Instance = getWeb3(pool.chain)
 
   try {
-    console.log('Getting pool data for: ', pool.id)
     const poolContract = isPotPool(pool) ? potPoolContract : regularPoolContract
     const poolInstance = new web3Instance.eth.Contract(
       poolContract.contract.abi,
@@ -62,9 +60,6 @@ const fetchAndExpandPool = async pool => {
     }
 
     const tradingApy = pool.tradingApyOveride || (await getTradingApy(pool))
-    if (pool.id === 'crv_tri_crypto') {
-      console.log('tradingApy', tradingApy)
-    }
 
     if (pool.rewardAPYOveride) {
       poolStats = {
