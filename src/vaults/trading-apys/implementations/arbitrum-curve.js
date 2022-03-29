@@ -10,11 +10,11 @@ const getTradingApy = async poolId => {
 
     apy = new BigNumber(get(response, `data.apy.day[${poolId}]`, 0))
   } catch (err) {
-    console.error('convex API error: ', err)
+    console.error('arbitrum CRV API error: ', err)
     apy = new BigNumber(0)
   }
 
-  return apy.isNaN() ? '0' : apy.toFixed(2, BigNumber.ROUND_HALF_UP)
+  return apy.isNaN() ? '0' : apy.times('100').toFixed(2, BigNumber.ROUND_DOWN)
 }
 
 module.exports = {
