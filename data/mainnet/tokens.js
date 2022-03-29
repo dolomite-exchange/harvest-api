@@ -6589,6 +6589,7 @@ module.exports = {
   },
   crv_tri_crypto: {
     chain: CHAINS_ID.ARBITRUM_ONE,
+    category: VAULT_CATEGORIES_IDS.CURVE,
     logoUrl: './icons/crypto-icons-stack-2-arbitrum.svg#tricrypto',
     decimals: '18',
     tokenAddress: addresses.ARBITRUM_ONE.crv_tri_crypto.Underlying,
