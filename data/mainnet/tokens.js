@@ -10,6 +10,7 @@ const {
 const addresses = require('./addresses.json')
 
 const strat30PercentFactor = '0.7'
+const arbitrumProfitSharingPercent = '0.75'
 const profitSharingCut8Percent = '0.92'
 const convexProfitSharingFactor = '0.63'
 
@@ -6602,6 +6603,19 @@ module.exports = {
         ['WBTC', 'WETH', 'USDT'],
       ],
     },
+    estimateApyFunctions: [
+      {
+        type: ESTIMATED_APY_TYPES.CRV_GENERAL,
+        params: [
+          'crv_tri_crypto',
+          addresses.ARBITRUM_ONE.crv_tri_crypto.Gauge,
+          addresses.ARBITRUM_ONE.crv_tri_crypto.Underlying,
+          arbitrumProfitSharingPercent,
+          CHAINS_ID.ARBITRUM_ONE,
+          addresses.ARBITRUM_ONE.crv_tri_crypto.RootChainGauge,
+        ],
+      },
+    ],
   },
   aUSDT: {
     chain: CHAINS_ID.ARBITRUM_ONE,

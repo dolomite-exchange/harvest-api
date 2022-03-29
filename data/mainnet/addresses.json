@@ -1997,6 +1997,8 @@
       "NewStrategy": "0xa603Ee4c897d5C241f22A2541f07415F0d5d0618",
       "NewPool": "0xe87BD4EeBb65238809913E93EEbA2CC22Dbd0526",
       "RewardPool": "0x97E2768e8E73511cA874545DC5Ff8067eB19B787",
+      "Gauge": "0x97E2768e8E73511cA874545DC5Ff8067eB19B787",
+      "RootChainGauge": "0x9044e12fb1732f88ed0c93cfa5e9bb9bd2990ce5",
       "useMsigProfitCalculation": true
     },
     "aTriCryptoPool": "0x960ea3e3C7FB317332d990873d354E18d7645590",

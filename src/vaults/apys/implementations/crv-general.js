@@ -14,9 +14,9 @@ const getApy = async (
   rootChainGaugeAddress,
 ) => {
   const web3Eth = getWeb3(CHAIN_TYPES.ETH)
-  let web3Polygon
-  if (chain != CHAIN_TYPES.ETH) {
-    web3Polygon = getWeb3(CHAIN_TYPES.MATIC)
+  let nonEthWeb3
+  if (chain !== CHAIN_TYPES.ETH) {
+    nonEthWeb3 = getWeb3(chain)
   }
 
   const {
@@ -41,13 +41,13 @@ const getApy = async (
   const crvControllerInstance = new web3Eth.eth.Contract(crvControllerAbi, crvControllerAddress)
 
   let gaugeInstance, weight
-  if (chain == CHAIN_TYPES.ETH) {
+  if (chain === CHAIN_TYPES.ETH) {
     gaugeInstance = new web3Eth.eth.Contract(crvGaugeAbi, gaugeAddress)
     weight = new BigNumber(
       await crvControllerMethods.getGaugeRelativeWeight(gaugeAddress, crvControllerInstance),
     ).dividedBy(new BigNumber(10).exponentiatedBy(18))
   } else {
-    gaugeInstance = new web3Polygon.eth.Contract(crvGaugeAbi, gaugeAddress)
+    gaugeInstance = new nonEthWeb3.eth.Contract(crvGaugeAbi, gaugeAddress)
     weight = new BigNumber(
       await crvControllerMethods.getGaugeRelativeWeight(
         rootChainGaugeAddress,
