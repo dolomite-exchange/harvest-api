@@ -14,7 +14,7 @@ const getTradingApy = async poolId => {
     apy = new BigNumber(0)
   }
 
-  return apy.isNaN() ? '0' : apy.toFixed(2, 1)
+  return apy.isNaN() ? '0' : apy.toFixed(2, BigNumber.ROUND_HALF_UP)
 }
 
 module.exports = {
