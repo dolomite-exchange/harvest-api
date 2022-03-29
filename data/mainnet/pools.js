@@ -5959,11 +5959,11 @@ module.exports = [
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://app.sushi.com/swap"
+              href="https://arbitrum.curve.fi/tricrypto/deposit"
             >
-             Sushiswap
+             Arbitrum Curve
             </a>
-            and swap assets to <b>YEL</b>
+            and add assets to <b>TriCrypto</b>
           </li>
           <li>
             Go back to this vault, hit &quot;MAX&quot; and then &quot;Deposit&quot;. Leave
