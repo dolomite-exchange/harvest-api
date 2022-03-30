@@ -6625,7 +6625,7 @@ module.exports = {
   CrvEursUsd_arbitrum: {
     chain: CHAINS_ID.ARBITRUM_ONE,
     category: VAULT_CATEGORIES_IDS.CURVE,
-    logoUrl: './icons/crypto-icons-stack-2-arbitrum.svg#eursusd',
+    logoUrl: './icons/crypto-icons-stack-2-arbitrum.svg#eurs',
     decimals: '18',
     tokenAddress: addresses.ARBITRUM_ONE.CrvEursUsd_Strategy.Underlying,
     displayName: 'CRV:EursUsd',
@@ -6660,7 +6660,7 @@ module.exports = {
   CrvRenWbtc_arbitrum: {
     chain: CHAINS_ID.ARBITRUM_ONE,
     category: VAULT_CATEGORIES_IDS.CURVE,
-    logoUrl: './icons/crypto-icons-stack-2-arbitrum.svg#ren',
+    logoUrl: './icons/crypto-icons-stack-2-arbitrum.svg#renbtc',
     decimals: '18',
     tokenAddress: addresses.ARBITRUM_ONE.CrvRenWbtc_Strategy.Underlying,
     displayName: 'CRV:RenWbtc',
