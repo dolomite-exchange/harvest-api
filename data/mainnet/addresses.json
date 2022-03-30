@@ -1989,8 +1989,41 @@
     }
   },
   "ARBITRUM_ONE": {
-    "aiFARM": "0x9dCA587dc65AC0a043828B0acd946d71eb8D46c1",
-    "crv_tri_crypto": {
+    "iFARM": "0x9dCA587dc65AC0a043828B0acd946d71eb8D46c1",
+    "Crv2Pool_Strategy": {
+      "Underlying": "0x7f90122BF0700F9E7e1F688fe926940E8839F353",
+      "NewVault": "0x7FEBd439C00339C377031001048B556C085f100E",
+      "StrategyContract": "TwoPoolStrategyMainnet",
+      "NewStrategy": "0xEfcF4AB8298010E1E4059F46a054de5e0f89EE52",
+      "NewPool": "0xdf3d8e9E96468A66fdA65C7DDcAD9F42D340BC03",
+      "RewardPool": "0xbF7E49483881C76487b0989CD7d9A8239B20CA41",
+      "Gauge": "0xbF7E49483881C76487b0989CD7d9A8239B20CA41",
+      "RootChainGauge": "0xFf17560d746F85674FE7629cE986E949602EF948",
+      "useMsigProfitCalculation": true
+    },
+    "CrvEursUsd_Strategy": {
+      "Underlying": "0x3dFe1324A0ee9d86337d06aEB829dEb4528DB9CA",
+      "NewVault": "0x09C29F5e64636487dD1DD851B994fa0AdE73A1bd",
+      "StrategyContract": "EursUsdPoolStrategyMainnet",
+      "NewStrategy": "0x85b589ed03bFf4969fB821ECd8a61d3e5DfFc0f2",
+      "NewPool": "0x9d240F3B7b8D3446E8C74908016dd8E38a866A2a",
+      "RewardPool": "0x37C7ef6B0E23C9bd9B620A6daBbFEC13CE30D824",
+      "Gauge": "0x37C7ef6B0E23C9bd9B620A6daBbFEC13CE30D824",
+      "RootChainGauge": "0x56eda719d82aE45cBB87B7030D3FB485685Bea45",
+      "useMsigProfitCalculation": true
+    },
+    "CrvRenWbtc_Strategy": {
+      "Underlying": "0x3E01dD8a5E1fb3481F0F589056b428Fc308AF0Fb",
+      "NewVault": "0xBB9864A9bb3341818F061Cce305aa82b0cF5B3A3",
+      "StrategyContract": "RenWbtcPoolStrategyMainnet",
+      "NewStrategy": "0xECC3CeDA34e3B61Dc6d1d00F69DB1b50d0C62332",
+      "NewPool": "0xA387fC22A1680B3B0244a1D5269FCA0078232D86",
+      "RewardPool": "0xC2b1DF84112619D190193E48148000e3990Bf627",
+      "Gauge": "0xC2b1DF84112619D190193E48148000e3990Bf627",
+      "RootChainGauge": "0x9f86c5142369b1ffd4223e5a2f2005fc66807894",
+      "useMsigProfitCalculation": true
+    },
+    "CrvTriCrypto_Strategy": {
       "Underlying": "0x8e0B8c8BB9db49a46697F3a5Bb8A308e744821D2",
       "NewVault": "0xcF1F62c17fcd5027d6810D76697F228FE44074FD",
       "StrategyContract": "TriCryptoStrategyMainnet",
@@ -2001,10 +2034,19 @@
       "RootChainGauge": "0x9044e12fb1732f88ed0c93cfa5e9bb9bd2990ce5",
       "useMsigProfitCalculation": true
     },
-    "aTriCryptoPool": "0x960ea3e3C7FB317332d990873d354E18d7645590",
-    "aTriCryptoToken": "0x8e0B8c8BB9db49a46697F3a5Bb8A308e744821D2",
-    "aUSDT": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
-    "aWBTC": "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
-    "aETH": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    "Crv2Pool": "0x7f90122bf0700f9e7e1f688fe926940e8839f353",
+    "Crv2PoolToken": "0x7f90122bf0700f9e7e1f688fe926940e8839f353",
+    "CrvEursUsdPool": "0xA827a652Ead76c6B0b3D19dba05452E06e25c27e",
+    "CrvEursUsdPoolToken": "0x3dFe1324A0ee9d86337d06aEB829dEb4528DB9CA",
+    "CrvRenWbtcPool": "0x3E01dD8a5E1fb3481F0F589056b428Fc308AF0Fb",
+    "CrvRenWbtcPoolToken": "0x3E01dD8a5E1fb3481F0F589056b428Fc308AF0Fb",
+    "CrvTriCryptoPool": "0x960ea3e3C7FB317332d990873d354E18d7645590",
+    "CrvTriCryptoToken": "0x8e0B8c8BB9db49a46697F3a5Bb8A308e744821D2",
+    "USDC": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "USDT": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+    "WBTC": "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+    "WETH": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+    "EURS": "0xD22a58f79e9481D1a88e00c343885A588b34b68B",
+    "RENBTC": "0xDBf31dF14B66535aF65AaC99C32e9eA844e14501"
   }
 }

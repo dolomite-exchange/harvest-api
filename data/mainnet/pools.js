@@ -5943,10 +5943,118 @@ module.exports = [
   },
   {
     chain: CHAINS_ID.ARBITRUM_ONE,
-    id: 'crv_tri_crypto',
+    id: 'Crv2Pool_arbitrum',
     type: POOL_TYPES.INCENTIVE,
-    contractAddress: addresses.ARBITRUM_ONE.crv_tri_crypto.NewPool,
-    collateralAddress: addresses.ARBITRUM_ONE.crv_tri_crypto.NewVault,
+    contractAddress: addresses.ARBITRUM_ONE.Crv2Pool_Strategy.NewPool,
+    collateralAddress: addresses.ARBITRUM_ONE.Crv2Pool_Strategy.NewVault,
+    rewardAPY: [],
+    rewardTokens: [addresses.iFARM],
+    rewardTokenSymbols: ['iFARM'],
+    stakeAndDepositHelpMessage: `
+      <div class="help-message">
+        <b>Deposit and stake:</b>
+        <ol class="numeric-list">
+          <li>
+            Go to&nbsp;
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://arbitrum.curve.fi/2pool/deposit"
+            >
+             Arbitrum Curve
+            </a>
+            and add assets to <b>2Pool</b>
+          </li>
+          <li>
+            Go back to this vault, hit &quot;MAX&quot; and then &quot;Deposit&quot;. Leave
+            &quot;Stake for rewards&quot; checked for staking
+          </li>
+        </ol>
+      </div>
+   `,
+    tradingApyFunction: {
+      type: TRADING_APY_TYPES.ARBITRUM_CURVE,
+      params: ['2pool'],
+    },
+  },
+  {
+    chain: CHAINS_ID.ARBITRUM_ONE,
+    id: 'CrvEursUsd_arbitrum',
+    type: POOL_TYPES.INCENTIVE,
+    contractAddress: addresses.ARBITRUM_ONE.CrvEursUsd_Strategy.NewPool,
+    collateralAddress: addresses.ARBITRUM_ONE.CrvEursUsd_Strategy.NewVault,
+    rewardAPY: [],
+    rewardTokens: [addresses.iFARM],
+    rewardTokenSymbols: ['iFARM'],
+    stakeAndDepositHelpMessage: `
+      <div class="help-message">
+        <b>Deposit and stake:</b>
+        <ol class="numeric-list">
+          <li>
+            Go to&nbsp;
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://arbitrum.curve.fi/eursusd/deposit"
+            >
+             Arbitrum Curve
+            </a>
+            and add assets to <b>EursUsd</b>
+          </li>
+          <li>
+            Go back to this vault, hit &quot;MAX&quot; and then &quot;Deposit&quot;. Leave
+            &quot;Stake for rewards&quot; checked for staking
+          </li>
+        </ol>
+      </div>
+   `,
+    tradingApyFunction: {
+      type: TRADING_APY_TYPES.ARBITRUM_CURVE,
+      params: ['eursusd'],
+    },
+  },
+  {
+    chain: CHAINS_ID.ARBITRUM_ONE,
+    id: 'CrvRenWbtc_arbitrum',
+    type: POOL_TYPES.INCENTIVE,
+    contractAddress: addresses.ARBITRUM_ONE.CrvRenWbtc_Strategy.NewPool,
+    collateralAddress: addresses.ARBITRUM_ONE.CrvRenWbtc_Strategy.NewVault,
+    rewardAPY: [],
+    rewardTokens: [addresses.iFARM],
+    rewardTokenSymbols: ['iFARM'],
+    stakeAndDepositHelpMessage: `
+      <div class="help-message">
+        <b>Deposit and stake:</b>
+        <ol class="numeric-list">
+          <li>
+            Go to&nbsp;
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://arbitrum.curve.fi/ren/deposit"
+            >
+             Arbitrum Curve
+            </a>
+            and add assets to <b>RenWbtc</b>
+          </li>
+          <li>
+            Go back to this vault, hit &quot;MAX&quot; and then &quot;Deposit&quot;. Leave
+            &quot;Stake for rewards&quot; checked for staking
+          </li>
+        </ol>
+      </div>
+   `,
+    tradingApyFunction: {
+      type: TRADING_APY_TYPES.ARBITRUM_CURVE,
+      params: ['ren'],
+    },
+  },
+  {
+    chain: CHAINS_ID.ARBITRUM_ONE,
+    id: 'CrvTriCrypto_arbitrum',
+    type: POOL_TYPES.INCENTIVE,
+    contractAddress: addresses.ARBITRUM_ONE.CrvTriCrypto_Strategy.NewPool,
+    collateralAddress: addresses.ARBITRUM_ONE.CrvTriCrypto_Strategy.NewVault,
     rewardAPY: [],
     rewardTokens: [addresses.iFARM],
     rewardTokenSymbols: ['iFARM'],

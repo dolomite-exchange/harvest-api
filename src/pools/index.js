@@ -36,8 +36,18 @@ const fetchAndExpandPool = async pool => {
       pool.contractAddress,
     )
 
-    const lpAddress = await poolContract.methods.lpToken(poolInstance)
-    const lpTokenData = await fetchLpToken(lpAddress, pool.chain)
+    const lpAddress = await poolContract.methods.lpToken(poolInstance).catch(error => {
+      console.error(
+        `Could not get lpToken for pool with ID ${pool.id} and address ${pool.contractAddress}`,
+      )
+      return Promise.reject(error)
+    })
+    const lpTokenData = await fetchLpToken(lpAddress, pool.chain).catch(error => {
+      console.error(
+        `Could not get lpTokenData for pool with ID ${pool.id} and lpAddress ${lpAddress}`,
+      )
+      return Promise.reject(error)
+    })
 
     const dbData = await Cache.find({
       type: { $in: [DB_CACHE_IDS.STATS, DB_CACHE_IDS.POOLS] },
@@ -204,7 +214,10 @@ const fetchLpToken = async (lpAddress, chainId) => {
   const lpTokenInstance = new web3Instance.eth.Contract(tokenContract.contract.abi, lpAddress)
   const lpDecimals = await tokenContract.methods.getDecimals(lpTokenInstance)
   const lpSymbol = await tokenContract.methods.getSymbol(lpTokenInstance)
-  const lpTokenPrice = await getTokenPrice(lpAddress, chainId)
+  const lpTokenPrice = await getTokenPrice(lpAddress, chainId).catch(error => {
+    console.error(`Could not get lpToken price for address ${lpAddress} with chainId ${chainId}`)
+    return Promise.reject(error)
+  })
 
   const result = {
     address: lpAddress,
