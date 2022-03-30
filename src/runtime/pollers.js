@@ -32,6 +32,7 @@ const { Cache } = require('../lib/db/models/cache')
 const { storeData, loadData } = require('../lib/db/models/cache')
 const { getUIData } = require('../lib/data')
 const addresses = require('../lib/data/addresses.json')
+const { shouldGetPoolWithChain, isSpecialPool } = require("../lib/utils");
 
 const getProfitSharingFactor = chain => {
   switch (chain) {
@@ -231,7 +232,7 @@ const getPools = async () => {
 
   try {
     const bscPoolBatches = chunk(
-      pools.filter(pool => pool.chain === CHAIN_TYPES.BSC),
+      pools.filter(pool => pool.chain === CHAIN_TYPES.BSC && shouldGetPoolWithChain(pool.chain)),
       GET_POOL_DATA_BATCH_SIZE,
     )
 
@@ -248,7 +249,7 @@ const getPools = async () => {
     console.log('\n-- Getting MATIC pool data --')
 
     const maticPoolBatches = chunk(
-      pools.filter(pool => pool.chain === CHAIN_TYPES.MATIC),
+      pools.filter(pool => pool.chain === CHAIN_TYPES.MATIC && shouldGetPoolWithChain(pool.chain)),
       GET_POOL_DATA_BATCH_SIZE,
     )
 
@@ -266,7 +267,9 @@ const getPools = async () => {
     console.log('\n-- Getting ARBITRUM pool data --')
 
     const arbitrumPoolBatches = chunk(
-      pools.filter(pool => pool.chain === CHAIN_TYPES.ARBITRUM_ONE),
+      pools.filter(
+        pool => pool.chain === CHAIN_TYPES.ARBITRUM_ONE && shouldGetPoolWithChain(pool.chain),
+      ),
       GET_POOL_DATA_BATCH_SIZE,
     )
 
@@ -284,7 +287,11 @@ const getPools = async () => {
     console.log('\n-- Getting ETH pool data --')
 
     const ethPoolBatches = chunk(
-      pools.filter(pool => pool.chain === CHAIN_TYPES.ETH),
+      pools.filter(
+        pool =>
+          pool.chain === CHAIN_TYPES.ETH &&
+          (shouldGetPoolWithChain(pool.chain) || isSpecialPool(pool)),
+      ),
       GET_POOL_DATA_BATCH_SIZE,
     )
     if (size(ethPoolBatches)) {

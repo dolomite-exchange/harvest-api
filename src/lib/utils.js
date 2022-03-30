@@ -1,6 +1,14 @@
 const BigNumber = require('bignumber.js')
 const { format } = require('timeago.js')
 
+const allChains = process.env.SUPPORTED_CHAINS?.trim()
+  ?.split(';')
+  ?.map(value => Number.parseInt(value).toString())
+
+const isSpecialPool = pool => pool.id === 'profit-sharing-farm'
+
+const shouldGetPoolWithChain = chain => !allChains || allChains.indexOf(chain) !== -1
+
 const getDailyCompound = yearlyApr =>
   new BigNumber(1)
     .plus(new BigNumber(yearlyApr).dividedBy(36500))
@@ -32,6 +40,8 @@ const formatTimeago = date => {
 }
 
 module.exports = {
+  isSpecialPool,
+  shouldGetPoolWithChain,
   getDailyCompound,
   getWeeklyCompound,
   formatTimeago,
