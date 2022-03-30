@@ -4,6 +4,7 @@ const { format } = require('timeago.js')
 const allChains = process.env.SUPPORTED_CHAINS?.trim()
   ?.split(';')
   ?.map(value => Number.parseInt(value).toString())
+  ?.filter(value => value !== 'NaN')
 
 const isSpecialPool = pool => pool.id === 'profit-sharing-farm'
 
