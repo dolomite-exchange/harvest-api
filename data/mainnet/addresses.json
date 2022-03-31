@@ -1998,8 +1998,7 @@
       "NewPool": "0xdf3d8e9E96468A66fdA65C7DDcAD9F42D340BC03",
       "RewardPool": "0xbF7E49483881C76487b0989CD7d9A8239B20CA41",
       "Gauge": "0xbF7E49483881C76487b0989CD7d9A8239B20CA41",
-      "RootChainGauge": "0xFf17560d746F85674FE7629cE986E949602EF948",
-      "useMsigProfitCalculation": true
+      "RootChainGauge": "0xFf17560d746F85674FE7629cE986E949602EF948"
     },
     "CrvEursUsd_Strategy": {
       "Underlying": "0x3dFe1324A0ee9d86337d06aEB829dEb4528DB9CA",
@@ -2009,8 +2008,7 @@
       "NewPool": "0x9d240F3B7b8D3446E8C74908016dd8E38a866A2a",
       "RewardPool": "0x37C7ef6B0E23C9bd9B620A6daBbFEC13CE30D824",
       "Gauge": "0x37C7ef6B0E23C9bd9B620A6daBbFEC13CE30D824",
-      "RootChainGauge": "0x56eda719d82aE45cBB87B7030D3FB485685Bea45",
-      "useMsigProfitCalculation": true
+      "RootChainGauge": "0x56eda719d82aE45cBB87B7030D3FB485685Bea45"
     },
     "CrvRenWbtc_Strategy": {
       "Underlying": "0x3E01dD8a5E1fb3481F0F589056b428Fc308AF0Fb",
@@ -2020,8 +2018,7 @@
       "NewPool": "0xA387fC22A1680B3B0244a1D5269FCA0078232D86",
       "RewardPool": "0xC2b1DF84112619D190193E48148000e3990Bf627",
       "Gauge": "0xC2b1DF84112619D190193E48148000e3990Bf627",
-      "RootChainGauge": "0x9f86c5142369b1ffd4223e5a2f2005fc66807894",
-      "useMsigProfitCalculation": true
+      "RootChainGauge": "0x9f86c5142369b1ffd4223e5a2f2005fc66807894"
     },
     "CrvTriCrypto_Strategy": {
       "Underlying": "0x8e0B8c8BB9db49a46697F3a5Bb8A308e744821D2",
@@ -2031,8 +2028,23 @@
       "NewPool": "0xe87BD4EeBb65238809913E93EEbA2CC22Dbd0526",
       "RewardPool": "0x97E2768e8E73511cA874545DC5Ff8067eB19B787",
       "Gauge": "0x97E2768e8E73511cA874545DC5Ff8067eB19B787",
-      "RootChainGauge": "0x9044e12fb1732f88ed0c93cfa5e9bb9bd2990ce5",
-      "useMsigProfitCalculation": true
+      "RootChainGauge": "0x9044e12fb1732f88ed0c93cfa5e9bb9bd2990ce5"
+    },
+    "StargateUsdc_Strategy": {
+      "Underlying": "0x892785f33CdeE22A30AEF750F285E18c18040c3e",
+      "NewVault": "0xfC2640ca71B1724B89dc2714E661B0089f8c0EED",
+      "StrategyContract": "UsdcStargateStrategyMainnet",
+      "NewStrategy": "0xd6d33AD0504C3767832a96D7e2De088270407E9D",
+      "NewPool": "0x0Ca13CD8a69e93e459B20cB1dfa7eDd16380340e",
+      "RewardPool": "0xeA8DfEE1898a7e0a59f7527F076106d7e44c2176"
+    },
+    "StargateUsdt_Strategy": {
+      "Underlying": "0xB6CfcF89a7B22988bfC96632aC2A9D6daB60d641",
+      "NewVault": "0x6d8ed5dace7C74e2d83AE09bB29d548c964EEBc5",
+      "StrategyContract": "UsdtStargateStrategyMainnet",
+      "NewStrategy": "0x73FCe9666F2E162Aa7AA99B5F3B0929D2bE28558",
+      "NewPool": "0x9e811366dB4C9FCE0c3F134a944Fe1cab2BA7B5E",
+      "RewardPool": "0xeA8DfEE1898a7e0a59f7527F076106d7e44c2176"
     },
     "Crv2Pool": "0x7f90122bf0700f9e7e1f688fe926940e8839f353",
     "Crv2PoolToken": "0x7f90122bf0700f9e7e1f688fe926940e8839f353",
@@ -2047,6 +2059,9 @@
     "WBTC": "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
     "WETH": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
     "EURS": "0xD22a58f79e9481D1a88e00c343885A588b34b68B",
-    "RENBTC": "0xDBf31dF14B66535aF65AaC99C32e9eA844e14501"
+    "RENBTC": "0xDBf31dF14B66535aF65AaC99C32e9eA844e14501",
+    "StargateRewardPool": "0xeA8DfEE1898a7e0a59f7527F076106d7e44c2176",
+    "StargateUsdc": "0x892785f33CdeE22A30AEF750F285E18c18040c3e",
+    "StargateUsdt": "0xB6CfcF89a7B22988bfC96632aC2A9D6daB60d641"
   }
 }

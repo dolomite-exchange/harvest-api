@@ -6085,4 +6085,68 @@ module.exports = [
       params: ['tricrypto'],
     },
   },
+  {
+    chain: CHAINS_ID.ARBITRUM_ONE,
+    id: 'StargateUSDC_arbitrum',
+    type: POOL_TYPES.INCENTIVE,
+    contractAddress: addresses.ARBITRUM_ONE.StargateUsdc_Strategy.NewPool,
+    collateralAddress: addresses.ARBITRUM_ONE.StargateUsdc_Strategy.NewVault,
+    rewardAPY: [],
+    rewardTokens: [addresses.iFARM],
+    rewardTokenSymbols: ['iFARM'],
+    stakeAndDepositHelpMessage: `
+      <div class="help-message">
+        <b>Deposit and stake:</b>
+        <ol class="numeric-list">
+          <li>
+            Go to&nbsp;
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://stargate.finance/pool/USDC-ARBITRUM"
+            >
+             Arbitrum Stargate Finance
+            </a>
+            and add <b>USDC</b> on the <i>Pool</i> page
+          </li>
+          <li>
+            Go back to this vault, hit &quot;MAX&quot; and then &quot;Deposit&quot;. Leave
+            &quot;Stake for rewards&quot; checked for staking
+          </li>
+        </ol>
+      </div>
+   `,
+  },
+  {
+    chain: CHAINS_ID.ARBITRUM_ONE,
+    id: 'StargateUSDT_arbitrum',
+    type: POOL_TYPES.INCENTIVE,
+    contractAddress: addresses.ARBITRUM_ONE.StargateUsdt_Strategy.NewPool,
+    collateralAddress: addresses.ARBITRUM_ONE.StargateUsdt_Strategy.NewVault,
+    rewardAPY: [],
+    rewardTokens: [addresses.iFARM],
+    rewardTokenSymbols: ['iFARM'],
+    stakeAndDepositHelpMessage: `
+      <div class="help-message">
+        <b>Deposit and stake:</b>
+        <ol class="numeric-list">
+          <li>
+            Go to&nbsp;
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://stargate.finance/pool/USDT-ARBITRUM"
+            >
+             Arbitrum Stargate Finance
+            </a>
+            and add <b>USDT</b> on the <i>Pool</i> page
+          </li>
+          <li>
+            Go back to this vault, hit &quot;MAX&quot; and then &quot;Deposit&quot;. Leave
+            &quot;Stake for rewards&quot; checked for staking
+          </li>
+        </ol>
+      </div>
+   `,
+  },
 ]

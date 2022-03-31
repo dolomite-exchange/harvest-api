@@ -32,7 +32,7 @@ const { Cache } = require('../lib/db/models/cache')
 const { storeData, loadData } = require('../lib/db/models/cache')
 const { getUIData } = require('../lib/data')
 const addresses = require('../lib/data/addresses.json')
-const { shouldGetPoolWithChain, isSpecialPool } = require("../lib/utils");
+const { shouldGetPoolWithChain, isSpecialPool } = require('../lib/utils')
 
 const getProfitSharingFactor = chain => {
   switch (chain) {
@@ -59,97 +59,126 @@ const getVaults = async () => {
 
   const tokensWithVault = pickBy(tokens, token => token.vaultAddress)
 
+  // Always get the ETH vaults. Don't apply the `shouldGetPoolWithChain` filter
   const ethVaultsBatches = chunk(
     Object.keys(tokensWithVault).filter(tokenId => tokens[tokenId].chain === CHAIN_TYPES.ETH),
     GET_VAULT_DATA_BATCH_SIZE,
   )
 
   const bscVaultsBatches = chunk(
-    Object.keys(tokensWithVault).filter(tokenId => tokens[tokenId].chain === CHAIN_TYPES.BSC),
+    Object.keys(tokensWithVault).filter(
+      tokenId =>
+        tokens[tokenId].chain === CHAIN_TYPES.BSC && shouldGetPoolWithChain(CHAIN_TYPES.BSC),
+    ),
     GET_VAULT_DATA_BATCH_SIZE,
   )
 
   const maticVaultsBatches = chunk(
-    Object.keys(tokensWithVault).filter(tokenId => tokens[tokenId].chain === CHAIN_TYPES.MATIC),
+    Object.keys(tokensWithVault).filter(
+      tokenId =>
+        tokens[tokenId].chain === CHAIN_TYPES.MATIC && shouldGetPoolWithChain(CHAIN_TYPES.MATIC),
+    ),
     GET_VAULT_DATA_BATCH_SIZE,
   )
 
   const arbitrumVaultsBatches = chunk(
     Object.keys(tokensWithVault).filter(
-      tokenId => tokens[tokenId].chain === CHAIN_TYPES.ARBITRUM_ONE,
+      tokenId =>
+        tokens[tokenId].chain === CHAIN_TYPES.ARBITRUM_ONE &&
+        shouldGetPoolWithChain(CHAIN_TYPES.ARBITRUM_ONE),
     ),
     GET_VAULT_DATA_BATCH_SIZE,
   )
 
   console.log('\n-- Getting BSC vaults data --')
   await forEach(bscVaultsBatches, async batch => {
-    try {
-      console.log('Getting vault data for: ', batch)
-      const vaultsData = await getVaultsData(batch)
-      fetchedBSCVaults = fetchedBSCVaults.concat(vaultsData)
-    } catch (err) {
-      hasErrors = true
-      console.error(`Failed to get vault data for: ${batch}`, err)
+    if (batch) {
+      try {
+        console.log('Getting vault data for: ', batch)
+        const vaultsData = await getVaultsData(batch)
+        fetchedBSCVaults = fetchedBSCVaults.concat(vaultsData)
+      } catch (err) {
+        hasErrors = true
+        console.error(`Failed to get vault data for: ${batch}`, err)
+      }
     }
   })
   console.log('\n-- Done getting BSC vaults data --')
 
   console.log('\n-- Getting MATIC vaults data --')
   await forEach(maticVaultsBatches, async batch => {
-    try {
-      console.log('Getting vault data for: ', batch)
-      const vaultsData = await getVaultsData(batch)
-      fetchedMATICVaults = fetchedMATICVaults.concat(vaultsData)
-    } catch (err) {
-      hasErrors = true
-      console.error(`Failed to get vault data for: ${batch}`, err)
+    if (batch) {
+      try {
+        console.log('Getting vault data for: ', batch)
+        const vaultsData = await getVaultsData(batch)
+        fetchedMATICVaults = fetchedMATICVaults.concat(vaultsData)
+      } catch (err) {
+        hasErrors = true
+        console.error(`Failed to get vault data for: ${batch}`, err)
+      }
     }
   })
   console.log('\n-- Done getting MATIC vaults data --')
 
   console.log('\n-- Getting ARBITRUM vaults data --')
   await forEach(arbitrumVaultsBatches, async batch => {
-    try {
-      console.log('Getting vault data for: ', batch)
-      const vaultsData = await getVaultsData(batch)
-      fetchedARBITRUMVaults = fetchedARBITRUMVaults.concat(vaultsData)
-    } catch (err) {
-      hasErrors = true
-      console.error(`Failed to get vault data for: ${batch}`, err)
+    if (batch) {
+      try {
+        console.log('Getting vault data for: ', batch)
+        const vaultsData = await getVaultsData(batch)
+        fetchedARBITRUMVaults = fetchedARBITRUMVaults.concat(vaultsData)
+      } catch (err) {
+        hasErrors = true
+        console.error(`Failed to get vault data for: ${batch}`, err)
+      }
     }
   })
   console.log('\n-- Done getting ARBITRUM vaults data --')
 
   console.log('\n-- Getting ETH vaults data --')
   await forEach(ethVaultsBatches, async batch => {
-    try {
-      console.log('Getting vault data for: ', batch)
-      const vaultsData = await getVaultsData(batch)
-      fetchedETHVaults = fetchedETHVaults.concat(vaultsData)
-    } catch (err) {
-      hasErrors = true
-      console.error(`Failed to get vault data for: ${batch}`, err)
+    if (batch) {
+      try {
+        console.log('Getting vault data for: ', batch)
+        const vaultsData = await getVaultsData(batch)
+        fetchedETHVaults = fetchedETHVaults.concat(vaultsData)
+      } catch (err) {
+        hasErrors = true
+        console.error(`Failed to get vault data for: ${batch}`, err)
+      }
     }
   })
   console.log('\n-- Done getting ETH vaults data --')
 
   fetchedVaults = {
-    bsc: fetchedBSCVaults.reduce((acc, vault) => {
-      acc[vault.id] = vault
-      return acc
-    }, {}),
-    eth: fetchedETHVaults.reduce((acc, vault) => {
-      acc[vault.id] = vault
-      return acc
-    }, {}),
-    matic: fetchedMATICVaults.reduce((acc, vault) => {
-      acc[vault.id] = vault
-      return acc
-    }, {}),
-    arbitrum: fetchedARBITRUMVaults.reduce((acc, vault) => {
-      acc[vault.id] = vault
-      return acc
-    }, {}),
+    bsc:
+      fetchedBSCVaults.length === 0
+        ? undefined
+        : fetchedBSCVaults.reduce((acc, vault) => {
+            acc[vault.id] = vault
+            return acc
+          }, {}),
+    eth:
+      fetchedETHVaults.length === 0
+        ? undefined
+        : fetchedETHVaults.reduce((acc, vault) => {
+            acc[vault.id] = vault
+            return acc
+          }, {}),
+    matic:
+      fetchedMATICVaults.length === 0
+        ? undefined
+        : fetchedMATICVaults.reduce((acc, vault) => {
+            acc[vault.id] = vault
+            return acc
+          }, {}),
+    arbitrum:
+      fetchedARBITRUMVaults.length === 0
+        ? undefined
+        : fetchedARBITRUMVaults.reduce((acc, vault) => {
+            acc[vault.id] = vault
+            return acc
+          }, {}),
   }
 
   console.log('\n-- Done getting vaults data --')
@@ -420,14 +449,14 @@ const getWeeklyBuybacks = async () => {
     for (let symbol in vaults[networkId]) {
       const vault = vaults[networkId][symbol]
       let weeklyBuyback = 0
-      if (!vault.inactive && symbol != 'IFARM') {
+      if (!vault.inactive && symbol !== 'IFARM') {
         const tokenGmv = vault.totalValueLocked
         let profitSharingFactor = getProfitSharingFactor(vault.chain)
         let estimatedApy
         if (
-          vault.category == 'UNIV3' ||
-          vault.category[0] == 'UNIV3' ||
-          vault.category[1] == 'UNIV3'
+          vault.category === 'UNIV3' ||
+          vault.category[0] === 'UNIV3' ||
+          vault.category[1] === 'UNIV3'
         ) {
           const poolToFetch = pools[networkId].find(
             pool =>
@@ -439,7 +468,7 @@ const getWeeklyBuybacks = async () => {
           if (vault.estimatedApy > 0) {
             estimatedApy = Number(estimatedApy) + Number(vault.estimatedApy)
           }
-        } else if (vault.category == 'SUSHI_HODL') {
+        } else if (vault.category === 'SUSHI_HODL') {
           profitSharingFactor = 0.85
           estimatedApy = vault.estimatedApy
         } else {

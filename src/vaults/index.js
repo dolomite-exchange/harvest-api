@@ -57,7 +57,10 @@ const fetchAndExpandVault = async symbol => {
   const { estimatedApy, estimatedApyBreakdown } = await executeEstimateApyFunctions(
     symbol,
     vaultData.estimateApyFunctions,
-  )
+  ).catch(error => {
+    console.error(`Could not get the estimated APY for symbol ${symbol} due to error:`, error)
+    return Promise.reject(error)
+  })
 
   const dbData = await Cache.find({
     type: { $in: [DB_CACHE_IDS.STATS, DB_CACHE_IDS.POOLS] },
@@ -94,7 +97,12 @@ const fetchAndExpandVault = async symbol => {
     uniswapV3PositionId = await getPosId(vaultData.vaultAddress, web3Instance)
   }
 
-  usdPrice = (await getTokenPrice(symbol)).toString()
+  usdPrice = await getTokenPrice(symbol)
+    .then(price => price.toString())
+    .catch(error => {
+      console.error(`Could not get token price for symbol ${symbol} due to error:`, error)
+      return Promise.reject(error)
+    })
 
   if (DEBUG_MODE) {
     const currentCache = cache.get(WEB3_CALL_COUNT_STATS_KEY)
