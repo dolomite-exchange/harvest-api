@@ -32,8 +32,7 @@ const getPrice = async (token, underlyingToken) => {
     return Promise.reject(e)
   })
 
-  const TEN = new BigNumber(10)
-  const value = TEN.pow(decimals).times(liquidity).div(totalSupply)
+  const ratio = new BigNumber(liquidity).div(totalSupply)
   const underlyingPrice = await getTokenPrice(underlyingToken, tokens[underlyingToken].chain).catch(
     e => {
       console.error('Could not get token price for underlyingToken', underlyingToken, e)
@@ -41,7 +40,7 @@ const getPrice = async (token, underlyingToken) => {
     },
   )
 
-  return value.times(underlyingPrice).toString()
+  return ratio.times(underlyingPrice).toString()
 }
 
 module.exports = {

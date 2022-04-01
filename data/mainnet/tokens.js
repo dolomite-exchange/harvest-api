@@ -6777,20 +6777,20 @@ module.exports = {
   },
   STG_arbitrum: {
     chain: CHAINS_ID.ARBITRUM_ONE,
-    logoUrl: './icons/curve-eurs.png',
-    tokenAddress: addresses.ARBITRUM_ONE.EURS,
+    logoUrl: './icons/stg.png',
+    tokenAddress: addresses.ARBITRUM_ONE.STG,
     decimals: '2',
     vaultAddress: null,
-    priceFunction: { type: GET_PRICE_TYPES.COINGECKO_CONTRACT, params: [addresses.EURS] },
+    priceFunction: { type: GET_PRICE_TYPES.COINGECKO_CONTRACT, params: [addresses.STG] },
   },
   StargateUSDC_arbitrum: {
     chain: CHAINS_ID.ARBITRUM_ONE,
     category: VAULT_CATEGORIES_IDS.STABLECOINS,
     logoUrl: './icons/usdc.png',
     decimals: '6',
-    tokenAddress: addresses.ARBITRUM_ONE.StargateUsdc_Strategy.Underlying,
+    tokenAddress: addresses.ARBITRUM_ONE.StargateUSDC_Strategy.Underlying,
     displayName: 'Stargate:USDC',
-    vaultAddress: addresses.ARBITRUM_ONE.StargateUsdc_Strategy.NewVault,
+    vaultAddress: addresses.ARBITRUM_ONE.StargateUSDC_Strategy.NewVault,
     priceFunction: {
       type: GET_PRICE_TYPES.STARGATE_LP_TOKEN,
       params: ['StargateUSDC_arbitrum', 'USDC_arbitrum'],
@@ -6799,7 +6799,7 @@ module.exports = {
       {
         type: ESTIMATED_APY_TYPES.STARGATE,
         params: [
-          '0',
+          '0', // pid
           addresses.ARBITRUM_ONE.StargateRewardPool,
           'StargateUSDC_arbitrum',
           'STG_arbitrum',
@@ -6817,9 +6817,9 @@ module.exports = {
     category: VAULT_CATEGORIES_IDS.STABLECOINS,
     logoUrl: './icons/usdt.png',
     decimals: '6',
-    tokenAddress: addresses.ARBITRUM_ONE.StargateUsdt_Strategy.Underlying,
+    tokenAddress: addresses.ARBITRUM_ONE.StargateUSDT_Strategy.Underlying,
     displayName: 'Stargate:USDT',
-    vaultAddress: addresses.ARBITRUM_ONE.StargateUsdt_Strategy.NewVault,
+    vaultAddress: addresses.ARBITRUM_ONE.StargateUSDT_Strategy.NewVault,
     priceFunction: {
       type: GET_PRICE_TYPES.STARGATE_LP_TOKEN,
       params: ['StargateUSDT_arbitrum', 'USDT_arbitrum'],
@@ -6828,7 +6828,7 @@ module.exports = {
       {
         type: ESTIMATED_APY_TYPES.STARGATE,
         params: [
-          '1',
+          '1', // pid
           addresses.ARBITRUM_ONE.StargateRewardPool,
           'StargateUSDT_arbitrum',
           'STG_arbitrum',

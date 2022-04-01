@@ -122,6 +122,7 @@
   "MIC": "0x368B3a58B5f49392e5C9E4C998cb0bB966752E51",
   "1INCH": "0x111111111117dc0aa78b770fa6a738034120c302",
   "EURS": "0xdb25f211ab05b1c97d595516f45794528a807ad8",
+  "STG": "0xaf5191b0de278c7286d6c7cc6ab6bb8a73ba2cd6",
   "UST": "0xa47c8bf37f92aBed4A126BDA807A7b7498661acD",
   "MIR": "0x09a3ecafa817268f77be1283176b946c4ff2e608",
   "mAAPL": "0xd36932143f6ebdedd872d5fb0651f4b72fd15a84",
@@ -2030,7 +2031,7 @@
       "Gauge": "0x97E2768e8E73511cA874545DC5Ff8067eB19B787",
       "RootChainGauge": "0x9044e12fb1732f88ed0c93cfa5e9bb9bd2990ce5"
     },
-    "StargateUsdc_Strategy": {
+    "StargateUSDC_Strategy": {
       "Underlying": "0x892785f33CdeE22A30AEF750F285E18c18040c3e",
       "NewVault": "0xfC2640ca71B1724B89dc2714E661B0089f8c0EED",
       "StrategyContract": "UsdcStargateStrategyMainnet",
@@ -2038,7 +2039,7 @@
       "NewPool": "0x0Ca13CD8a69e93e459B20cB1dfa7eDd16380340e",
       "RewardPool": "0xeA8DfEE1898a7e0a59f7527F076106d7e44c2176"
     },
-    "StargateUsdt_Strategy": {
+    "StargateUSDT_Strategy": {
       "Underlying": "0xB6CfcF89a7B22988bfC96632aC2A9D6daB60d641",
       "NewVault": "0x6d8ed5dace7C74e2d83AE09bB29d548c964EEBc5",
       "StrategyContract": "UsdtStargateStrategyMainnet",
@@ -2061,7 +2062,8 @@
     "EURS": "0xD22a58f79e9481D1a88e00c343885A588b34b68B",
     "RENBTC": "0xDBf31dF14B66535aF65AaC99C32e9eA844e14501",
     "StargateRewardPool": "0xeA8DfEE1898a7e0a59f7527F076106d7e44c2176",
-    "StargateUsdc": "0x892785f33CdeE22A30AEF750F285E18c18040c3e",
-    "StargateUsdt": "0xB6CfcF89a7B22988bfC96632aC2A9D6daB60d641"
+    "StargateUSDC": "0x892785f33CdeE22A30AEF750F285E18c18040c3e",
+    "StargateUSDT": "0xB6CfcF89a7B22988bfC96632aC2A9D6daB60d641",
+    "STG": "0x6694340fc020c5e6b96567843da2df01b2ce1eb6"
   }
 }

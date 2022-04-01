@@ -16,7 +16,7 @@ const getDailyCompound = yearlyApr =>
     .exponentiatedBy(365)
     .minus(1)
     .multipliedBy(100)
-    .toFixed(2)
+    .toFixed(2, 1)
 
 const getWeeklyCompound = yearlyApr =>
   new BigNumber(1)
@@ -24,7 +24,7 @@ const getWeeklyCompound = yearlyApr =>
     .exponentiatedBy(52)
     .minus(1)
     .multipliedBy(100)
-    .toFixed(2)
+    .toFixed(2, 1)
 
 const formatTimeago = date => {
   const diff = Math.floor(new Date() - date)

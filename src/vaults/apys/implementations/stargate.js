@@ -13,6 +13,7 @@ const { token: tokenContractData } = require('../../../lib/web3/contracts')
 const { getTokenPrice } = require('../../../prices')
 const { getUIData } = require('../../../lib/data')
 const { UI_DATA_FILES } = require('../../../lib/constants')
+const { getDailyCompound } = require("../../../lib/utils");
 
 const getStargatePoolWeight = async (poolInfo, rewardPoolInstance) => {
   const totalAllocPoint = await getTotalAllocPointStargate(rewardPoolInstance)
@@ -36,7 +37,7 @@ const getApy = async (
   const selectedWeb3 = getWeb3(chain)
   const masterChefContract = stargateMasterchefContract
 
-  let apy,
+  let apr,
     stargatePerBlock,
     blocksPerYear,
     poolInfo = {}
@@ -68,17 +69,17 @@ const getApy = async (
 
   const totalSupplyInUsd = totalSupply.multipliedBy(lpTokenPrice)
 
-  apy = new BigNumber(stargatePriceInUsd)
+  apr = new BigNumber(stargatePriceInUsd)
 
-  apy = apy.times(stargatePerBlock).times(blocksPerYear)
+  apr = apr.times(stargatePerBlock).times(blocksPerYear)
 
-  apy = apy.times(poolWeight).div(totalSupplyInUsd)
+  apr = apr.times(poolWeight).div(totalSupplyInUsd)
 
   if (reduction) {
-    apy = apy.multipliedBy(reduction)
+    apr = apr.multipliedBy(reduction)
   }
 
-  return apy.multipliedBy(100).toFixed(2, 1)
+  return getDailyCompound(apr.multipliedBy(100))
 }
 
 module.exports = {
