@@ -1,7 +1,5 @@
 const BigNumber = require('bignumber.js')
 const { getWeb3 } = require('../../../lib/web3')
-const getLPTokenPrice = require('../../../prices/implementations/lp-token.js').getPrice
-const tokenAddresses = require('../../../lib/data/addresses.json')
 const stargateMasterchefContract = require('../../../lib/web3/contracts/stargate-masterchef/contract.json')
 const {
   getPoolInfo: getPoolInfoSushi,
@@ -13,7 +11,7 @@ const { token: tokenContractData } = require('../../../lib/web3/contracts')
 const { getTokenPrice } = require('../../../prices')
 const { getUIData } = require('../../../lib/data')
 const { UI_DATA_FILES } = require('../../../lib/constants')
-const { getDailyCompound } = require("../../../lib/utils");
+const { getDailyCompound } = require('../../../lib/utils')
 
 const getStargatePoolWeight = async (poolInfo, rewardPoolInstance) => {
   const totalAllocPoint = await getTotalAllocPointStargate(rewardPoolInstance)
@@ -37,10 +35,7 @@ const getApy = async (
   const selectedWeb3 = getWeb3(chain)
   const masterChefContract = stargateMasterchefContract
 
-  let apr,
-    stargatePerBlock,
-    blocksPerYear,
-    poolInfo = {}
+  let apr, stargatePerBlock, blocksPerYear, poolInfo
 
   const masterChefInstance = new selectedWeb3.eth.Contract(
     masterChefContract.abi,

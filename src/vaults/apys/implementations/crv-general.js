@@ -4,7 +4,7 @@ const { getTokenPrice } = require('../../../prices')
 const { CHAIN_TYPES } = require('../../../lib/constants')
 const { crv, crvGauge, crvController } = require('../../../lib/web3/contracts')
 const tokenAddresses = require('../../../lib/data/addresses.json')
-const { getDailyCompound } = require("../../../lib/utils");
+const { getDailyCompound } = require('../../../lib/utils')
 
 const getApy = async (
   tokenSymbol,
