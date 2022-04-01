@@ -4,12 +4,13 @@ const { getTokenPrice } = require('../../../prices')
 const { CHAIN_TYPES } = require('../../../lib/constants')
 const { crv, crvGauge, crvController } = require('../../../lib/web3/contracts')
 const tokenAddresses = require('../../../lib/data/addresses.json')
+const { getDailyCompound } = require("../../../lib/utils");
 
 const getApy = async (
   tokenSymbol,
   gaugeAddress,
   swapAddress,
-  factor,
+  profitSharingFactor,
   chain = CHAIN_TYPES.ETH,
   rootChainGaugeAddress,
 ) => {
@@ -70,14 +71,13 @@ const getApy = async (
     .dividedBy(new BigNumber(10).exponentiatedBy(18))
     .times(lpTokenPrice)
 
-  let apy = currentRate
+  let apr = currentRate
     .multipliedBy(rewardTokenInUsd)
     .multipliedBy(weight)
     .dividedBy(totalSupplyInUsd)
     .multipliedBy(100) // 100%
 
-  const result = apy.multipliedBy(factor).toFixed(2, 1)
-  return result
+  return getDailyCompound(apr.multipliedBy(profitSharingFactor))
 }
 
 module.exports = {
