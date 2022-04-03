@@ -2,8 +2,8 @@
 
 while true ; do
   echo "#################################################################################################################"
-  HARDHAT_NETWORK=hardhat ts-node standalone-runner.ts
+  TS_NODE_TRANSPILE_ONLY=1 npx hardhat --network hardhat run ./scripts/standalone-runner.ts
   sleep 10
-  HARDHAT_NETWORK=cron_mainnet ts-node standalone-runner.ts
+  TS_NODE_TRANSPILE_ONLY=1 npx hardhat --network arbitrum run ./scripts/standalone-runner.ts
   sleep 30
 done

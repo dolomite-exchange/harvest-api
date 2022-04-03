@@ -1,9 +1,11 @@
 import { HardhatUserConfig } from 'hardhat/config'
 
-require('@nomiclabs/hardhat-ethers')
-require('@nomiclabs/hardhat-web3')
+import '@typechain/hardhat'
+import '@nomiclabs/hardhat-ethers'
+import '@nomiclabs/hardhat-waffle'
+import '@nomiclabs/hardhat-web3'
 
-const developmentKeys = require('./dev-keys.json')
+require('dotenv').config()
 
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
@@ -14,14 +16,14 @@ const config: HardhatUserConfig = {
     hardhat: {
       chainId: 42161,
       forking: {
-        url: `https://mainnet.infura.io/v3/${developmentKeys.infuraKey}`,
+        url: `https://arbitrum-mainnet.infura.io/v3/${process.env.INFURA_KEY}`,
       },
     },
     arbitrum: {
-      url: `https://mainnet.infura.io/v3/${developmentKeys.infuraKey}`,
+      url: `https://arbitrum-mainnet.infura.io/v3/${process.env.INFURA_KEY}`,
       chainId: 42161,
       accounts: {
-        mnemonic: developmentKeys.privateKey,
+        mnemonic: process.env.PRIVATE_KEY,
       },
     },
   },
@@ -38,6 +40,10 @@ const config: HardhatUserConfig = {
       },
     ],
   },
+  typechain: {
+    tsNocheck: true,
+    externalArtifacts: ['abi/*.json'],
+  },
 }
 
-module.exports = config
+export default config
