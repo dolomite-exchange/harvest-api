@@ -1,10 +1,17 @@
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
-import { BaseContract, BigNumber } from 'ethers';
-import { ethers, web3, network } from 'hardhat';
+import { BigNumber as BigDecimal } from 'bignumber.js';
+import * as dotenv from 'dotenv';
+import { BaseContract, BigNumber, BigNumberish } from 'ethers';
+
+import * as fs from 'fs';
+import { ethers, network, web3 } from 'hardhat';
+// Prometheus monitoring
+import * as promClient from 'prom-client';
 import { Pushgateway } from 'prom-client';
+
+// logic control
+import * as nextVaultFile from '../next-vault.json';
 import {
-  IArbitrumGasInfo,
-  IArbitrumGasInfo__factory,
   IController,
   IController__factory,
   IERC20,
@@ -14,19 +21,12 @@ import {
   VaultV2,
   VaultV2__factory,
 } from '../typechain-types';
+import * as vaultDecisionFile from '../vault-decision.json';
 
-const fs = require('fs');
-
-// logic control
-const nextVaultFile = require('../next-vault.json');
-const vaultDecisionFile = require('../vault-decision.json');
-
-// Prometheus monitoring
-const promClient = require('prom-client');
 const Registry = promClient.Registry;
 const register = new Registry();
 
-require('dotenv').config();
+dotenv.config();
 
 async function pushMetrics(labels: Pushgateway.Parameters) {
   if (process.env.PROMETHEUS_MONITORING_ENABLED !== 'true') {
@@ -44,11 +44,11 @@ async function pushMetrics(labels: Pushgateway.Parameters) {
   );
   return await gateway
     .push(labels)
-    .then(({ resp, body }: { resp: any, body: any }) => {
-      console.log(`Metrics pushed, status ${resp.statusCode} ${body}`);
+    .then(({ resp, body }) => {
+      console.log(`Metrics pushed, status ${(resp as any).statusCode} ${body}`);
       register.clear();
     })
-    .catch((err: any) => {
+    .catch(err => {
       console.log(`Error pushing metrics: ${err}`);
     });
 }
@@ -58,7 +58,7 @@ async function reportSimulationProfit(
   block: number,
   ethProfit: BigNumber,
   execute: boolean,
-  gasPrice: BigNumber,
+  gasPriceWei: BigNumber,
 ) {
   if (process.env.PROMETHEUS_MONITORING_ENABLED !== 'true') {
     return;
@@ -94,7 +94,7 @@ async function reportSimulationProfit(
     registers: [register],
   });
   register.registerMetric(gasFeeMetric);
-  gasFeeMetric.set(gasPrice.toNumber());
+  gasFeeMetric.set(gasPriceWei.toNumber());
 
   const labels: Pushgateway.Parameters = {
     jobName: vault,
@@ -116,7 +116,7 @@ async function reportError(vaultKey: string, block: number, error: any) {
   register.registerMetric(errorMetric);
   errorMetric.inc(1);
 
-  let labels: Pushgateway.Parameters = {
+  const labels: Pushgateway.Parameters = {
     jobName: vaultKey,
     groupings: { instance: 'arbitrum', block: block.toString(), error: error.toString() },
   };
@@ -126,7 +126,7 @@ async function reportError(vaultKey: string, block: number, error: any) {
 // Only execute the `doHardWork` when the profit share is `greatDealRatio` times better than the gas cost in Ether
 const greatDealRatio = 3;
 // Execute a `doHardWork` when at least this many tokens are paid to the platform via the `platform fee`
-const minPlatformFeeProfit = ethers.BigNumber.from('5000000000000000'); // 0.005 ETH, target token is ETH
+const minPlatformFeeProfitInEth = ethers.BigNumber.from('5000000000000000'); // 0.005 ETH, target token is ETH
 
 const addresses = require('../../../data/mainnet/addresses.json');
 const allVaults = Object.keys(addresses.ARBITRUM_ONE);
@@ -146,9 +146,9 @@ const vaultIds = allVaults
 
 // input vault key and output next vault key in the list
 function findNextVaultKey(curVault: string) {
-  let id = vaultIds.findIndex(element => element == curVault);
-  let nextId;
+  const id = vaultIds.findIndex(element => element == curVault);
 
+  let nextId;
   if (id == vaultIds.length - 1) {
     nextId = 0;
   } else {
@@ -157,54 +157,50 @@ function findNextVaultKey(curVault: string) {
   return vaultIds[nextId];
 }
 
-/**
- * @return The gas price most-recently set in ArbSys, in gwei.
- */
-async function getCurrentGasPrice(): Promise<BigNumber> {
-  const signer = await ethers.provider.getSigner(0);
-  const gasInfo = new BaseContract(
-    addresses.ARBITRUM_ONE.IArbitrumGasInfo,
-    IArbitrumGasInfo__factory.createInterface(),
-    signer,
-  ) as IArbitrumGasInfo;
-
-  const result = await gasInfo.getPricesInWei();
-  return result[5].div('1000000000');
+async function getCurrentGasPriceWei(): Promise<BigNumber> {
+  const gasPriceWei = await network.provider.request({
+    method: 'eth_gasPrice',
+    params: [],
+  });
+  return ethers.BigNumber.from(gasPriceWei);
 }
 
-async function sleep(ms: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms));
+async function sleep(ms: number) {
+  await new Promise<void>(resolve => setTimeout(resolve, ms))
 }
 
-/**
- * @return A random number between min and max
- */
-function getRandomInt(min: number, max: number): number {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
-}
+const currentVaultKey: string = nextVaultFile.next_vault_key;
+const vaultAddress = addresses.ARBITRUM_ONE[currentVaultKey].NewVault;
 
-let currentVaultKey: string = nextVaultFile.next_vault_key;
 let controller: IController;
-let vaultAddress = addresses.ARBITRUM_ONE[currentVaultKey].NewVault;
 let vault: VaultV2;
 let weth: IERC20;
 let targetToken: IERC20;
 
-let platformFeeCollected = ethers.BigNumber.from('0');
+async function convertProfitToEth(profitShareAddress: string, targetToken: IERC20): Promise<BigNumber> {
+  if (targetToken.address === addresses.ARBITRUM_ONE.WETH) {
+    return weth.balanceOf(profitShareAddress)
+  }
+
+  return Promise.reject(new Error('No conversion function created from targetToken to ETH'));
+}
 
 async function executeSimulationForDoHardWork(
   signers: SignerWithAddress[],
   storage: Storage,
-  gasPrice: BigNumber,
+  gasPriceWei: BigNumber,
   hint: BigNumber,
+  targetToken: IERC20,
 ) {
   const governanceAddress = await storage.governance();
   await network.provider.request({
     method: 'hardhat_impersonateAccount',
     params: [governanceAddress],
   });
+  await network.provider.send('hardhat_setBalance', [
+    governanceAddress,
+    `0x${ethers.BigNumber.from('1000000000000000000').toBigInt().toString(16)}`,
+  ]);
   const governance = await ethers.getSigner(governanceAddress);
   await controller.connect(governance).addHardWorker(signers[0].address);
 
@@ -212,20 +208,23 @@ async function executeSimulationForDoHardWork(
   console.log('Doing simulation on vault:', currentVaultKey);
   console.log('Vault Address:', vaultAddress);
 
-  let currentSimulationBlock = await web3.eth.getBlockNumber();
-  console.log('Simulation is occurring at block:', currentSimulationBlock);
+  const currentSimulationBlock = await web3.eth.getBlockNumber();
+  console.log('Simulation is occurring at block:', currentSimulationBlock.toString());
 
-  let decision;
   let executeFlag = false;
   const availableToInvestOut = await vault.availableToInvestOut();
   const underlyingBalanceWithInvestment = await vault.underlyingBalanceWithInvestment();
 
   console.log('Checking if we we need to push funds...');
+  const investmentNumerator = new BigDecimal((await vault.vaultFractionToInvestNumerator()).toString());
+  const investmentDenominator = new BigDecimal((await vault.vaultFractionToInvestDenominator()).toString());
+  const ONE_HUNDRED = new BigDecimal('100');
   console.log(
     'Vault investment ratio:',
-    (await vault.vaultFractionToInvestNumerator()).toString(),
+    investmentNumerator.toString(),
     '/',
-    (await vault.vaultFractionToInvestDenominator()).toString(),
+    investmentDenominator.toString(),
+    `(${(investmentNumerator.div(investmentDenominator).times(ONE_HUNDRED)).toString()}%)`,
   );
 
   const underlying = new BaseContract(
@@ -239,10 +238,10 @@ async function executeSimulationForDoHardWork(
   console.log('Available to invest out: ', availableToInvestOut.toString());
 
   if (availableToInvestOut.gt('0')) {
-    console.log('Funds NEED to be pushed');
+    console.log('Funds need to be pushed into the vault');
     executeFlag = true;
   } else {
-    console.log('Funds DO NOT need to be pushed');
+    console.log('Funds do not need to be pushed into the vault');
   }
 
   const profitShareAddress = governanceAddress;
@@ -250,22 +249,22 @@ async function executeSimulationForDoHardWork(
   let ethProfit = ethers.BigNumber.from('0');
 
   if (!executeFlag) {
-    console.log('======= Doing hardWork ======');
+    console.log('========================= Doing hardWork =========================');
     try {
       console.time('doHardWork simulation');
-      const tx = await controller.doHardWork(vaultAddress, hint, '101', '100', { gasPrice });
+      const tx = await controller.doHardWork(vaultAddress, hint, '101', '100', { gasPrice: gasPriceWei });
       console.timeEnd('doHardWork simulation');
 
       const txResult = await ethers.provider.getTransactionReceipt(tx.hash);
       const ethCost = txResult.gasUsed.mul(txResult.effectiveGasPrice);
-      const ethInProfitShareAfter = await weth.balanceOf(profitShareAddress);
+      const ethInProfitShareAfter = await convertProfitToEth(profitShareAddress, targetToken);
       ethProfit = ethInProfitShareAfter.sub(ethInProfitShareBefore);
 
-      console.log('gasUsed:            ', txResult.gasUsed.toString());
-      console.log('profit in ETH:      ', web3.utils.fromWei(ethProfit.toString()));
+      console.log('Gas used:           ', txResult.gasUsed.toString());
+      console.log('Profit (in ETH):    ', web3.utils.fromWei(ethProfit.toString()));
       console.log('Gas cost (ETH):     ', web3.utils.fromWei(ethCost.toString()));
 
-      if (ethProfit.gt(ethCost.mul(greatDealRatio)) || platformFeeCollected > minPlatformFeeProfit) {
+      if (ethProfit.gt(ethCost.mul(greatDealRatio)) || ethProfit.gte(minPlatformFeeProfitInEth)) {
         console.log('====> Time to invoke doHardWork ====');
         executeFlag = true;
       } else {
@@ -282,7 +281,7 @@ async function executeSimulationForDoHardWork(
     executeFlag = false;
   }
 
-  decision = {
+  const decision = {
     vaultKey: currentVaultKey,
     execute: executeFlag,
   };
@@ -294,13 +293,13 @@ async function executeSimulationForDoHardWork(
     currentSimulationBlock,
     ethProfit,
     executeFlag,
-    gasPrice,
+    gasPriceWei,
   );
 }
 
 async function executeDoHardWork(
   signers: SignerWithAddress[],
-  gasPrice: BigNumber,
+  gasPriceWei: BigNumber,
   hint: BigNumber,
 ) {
   const hardWorker = signers[0].address;
@@ -315,8 +314,29 @@ async function executeDoHardWork(
 
   if (vaultDecisionFile.execute) {
     console.log('Mainnet: Sending the tx for vault:', vaultDecisionFile.vaultKey);
+    console.log(`Using gas price of ${new BigDecimal(gasPriceWei.toString()).div(1e9).toString()} (gwei)`);
     try {
-      await controller.doHardWork(vaultAddress, hint, '101', '100', { gasPrice: gasPrice.mul(10) });
+      const deviationNumerator = '101';
+      const deviationDenominator = '100';
+      let gasLimit: BigNumberish;
+      try {
+        gasLimit = await controller.estimateGas.doHardWork(
+          vaultAddress,
+          hint,
+          deviationNumerator,
+          deviationDenominator,
+        );
+      } catch (e) {
+        gasLimit = '10000000'; // 10M gas
+      }
+      console.log(`Using gas limit of ${gasLimit.toString()}`);
+      await controller.doHardWork(
+        vaultAddress,
+        hint,
+        deviationNumerator,
+        deviationDenominator,
+        { gasPrice: gasPriceWei.mul(2) },
+      );
     } catch (e) {
       console.log('Error when sending tx: ');
       console.log(e);
@@ -326,28 +346,32 @@ async function executeDoHardWork(
     console.log('Mainnet: NOT sending the tx of ', vaultDecisionFile.vaultKey);
   }
 
-  let nextVaultKey = findNextVaultKey(currentVaultKey);
-  let isLastVault = currentVaultKey == vaultIds[vaultIds.length - 1];
-  let newNextVault = {
+  const nextVaultKey = findNextVaultKey(currentVaultKey);
+  const isLastVault = currentVaultKey == vaultIds[vaultIds.length - 1];
+  const newNextVault = {
     next_vault_key: nextVaultKey,
   };
   fs.writeFileSync('./next-vault.json', JSON.stringify(newNextVault), 'utf-8');
   console.log('NEXT Vault:', nextVaultKey);
 
   if (isLastVault) {
-    // Simulate and execute again in 5 hrs
-    console.log('Waiting for 5 hrs for the next round');
-    await sleep(5 * 60 * 60 * 1000);
+    const hours = 6;
+    console.log(`Finished harvesting the last vault. Waiting for ${hours} hours for the next iteration`);
+    await sleep(hours * 60 * 60 * 1000);
   } else {
-    let waitFor = getRandomInt(1000 * 60, 1000 * 60 * 2);
-    console.log('Waiting for: ', waitFor);
-    await sleep(waitFor);
+    const minutes = 1;
+    console.log(`Waiting for ${minutes} minutes`);
+    await sleep(minutes * 60 * 1000);
   }
 }
 
 async function main() {
   const signers = await ethers.getSigners();
-  const storage = new BaseContract(addresses.ARBITRUM_ONE.Storage, Storage__factory.createInterface(), signers[0]) as Storage;
+  const storage = new BaseContract(
+    addresses.ARBITRUM_ONE.Storage,
+    Storage__factory.createInterface(),
+    signers[0],
+  ) as Storage;
   controller = new BaseContract(
     await storage.controller(),
     IController__factory.createInterface(),
@@ -360,14 +384,14 @@ async function main() {
     IERC20__factory.createInterface(),
     signers[0],
   ) as IERC20;
-  const gasPrice = await getCurrentGasPrice();
+  const gasPriceWei = await getCurrentGasPriceWei();
   const hint = await vault.getPricePerFullShare();
   console.log('==================================================================');
 
   if (process.env.HARDHAT_NETWORK == 'hardhat') {
-    await executeSimulationForDoHardWork(signers, storage, gasPrice, hint);
-  } else if (process.env.HARDHAT_NETWORK == 'cron_mainnet') {
-    await executeDoHardWork(signers, gasPrice, hint);
+    await executeSimulationForDoHardWork(signers, storage, gasPriceWei, hint, targetToken);
+  } else if (process.env.HARDHAT_NETWORK == 'arbitrum') {
+    await executeDoHardWork(signers, gasPriceWei, hint);
   }
 }
 

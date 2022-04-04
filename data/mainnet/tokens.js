@@ -6590,7 +6590,7 @@ module.exports = {
   Crv2Pool_arbitrum: {
     chain: CHAINS_ID.ARBITRUM_ONE,
     category: VAULT_CATEGORIES_IDS.CURVE,
-    logoUrl: './icons/crypto-icons-stack-2-arbitrum.svg#2pool',
+    logoUrl: './icons/curve-crypto-icons-stack-2-arbitrum.svg#2pool',
     decimals: '18',
     tokenAddress: addresses.ARBITRUM_ONE.Crv2Pool_Strategy.Underlying,
     displayName: 'CRV:2Pool',
@@ -6625,7 +6625,7 @@ module.exports = {
   CrvEursUsd_arbitrum: {
     chain: CHAINS_ID.ARBITRUM_ONE,
     category: VAULT_CATEGORIES_IDS.CURVE,
-    logoUrl: './icons/crypto-icons-stack-2-arbitrum.svg#eurs',
+    logoUrl: './icons/curve-crypto-icons-stack-2-arbitrum.svg#eurs',
     decimals: '18',
     tokenAddress: addresses.ARBITRUM_ONE.CrvEursUsd_Strategy.Underlying,
     displayName: 'CRV:EursUsd',
@@ -6660,7 +6660,7 @@ module.exports = {
   CrvRenWbtc_arbitrum: {
     chain: CHAINS_ID.ARBITRUM_ONE,
     category: VAULT_CATEGORIES_IDS.CURVE,
-    logoUrl: './icons/crypto-icons-stack-2-arbitrum.svg#renbtc',
+    logoUrl: './icons/curve-crypto-icons-stack-2-arbitrum.svg#renbtc',
     decimals: '18',
     tokenAddress: addresses.ARBITRUM_ONE.CrvRenWbtc_Strategy.Underlying,
     displayName: 'CRV:RenWbtc',
@@ -6695,7 +6695,7 @@ module.exports = {
   CrvTriCrypto_arbitrum: {
     chain: CHAINS_ID.ARBITRUM_ONE,
     category: VAULT_CATEGORIES_IDS.CURVE,
-    logoUrl: './icons/crypto-icons-stack-2-arbitrum.svg#tricrypto',
+    logoUrl: './icons/curve-crypto-icons-stack-2-arbitrum.svg#tricrypto',
     decimals: '18',
     tokenAddress: addresses.ARBITRUM_ONE.CrvTriCrypto_Strategy.Underlying,
     displayName: 'CRV:TriCryptoV2',
