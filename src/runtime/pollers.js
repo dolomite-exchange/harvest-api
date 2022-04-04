@@ -61,7 +61,10 @@ const getVaults = async () => {
 
   // Always get the ETH vaults. Don't apply the `shouldGetPoolWithChain` filter
   const ethVaultsBatches = chunk(
-    Object.keys(tokensWithVault).filter(tokenId => tokens[tokenId].chain === CHAIN_TYPES.ETH),
+    Object.keys(tokensWithVault).filter(
+      tokenId =>
+        tokens[tokenId].chain === CHAIN_TYPES.ETH && tokenId === 'IFARM'
+    ),
     GET_VAULT_DATA_BATCH_SIZE,
   )
 
