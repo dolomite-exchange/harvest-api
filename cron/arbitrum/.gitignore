@@ -6,3 +6,5 @@ settings.json
 .idea/
 .env
 typechain-types/
+
+data/

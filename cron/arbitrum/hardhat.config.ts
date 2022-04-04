@@ -22,9 +22,7 @@ const config: HardhatUserConfig = {
     arbitrum: {
       url: `https://arbitrum-mainnet.infura.io/v3/${process.env.INFURA_KEY}`,
       chainId: 42161,
-      accounts: {
-        mnemonic: process.env.PRIVATE_KEY,
-      },
+      accounts: [process.env.PRIVATE_KEY || ''],
     },
   },
   solidity: {

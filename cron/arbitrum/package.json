@@ -2,7 +2,12 @@
   "name": "hard-worker-arbitrum",
   "license": "ISC",
   "scripts": {
-    "clean": "npx hardhat clean",
+    "build": "npm run copy-data && docker build -t dolomiteprotocol/harvest-finance-compounder-arbitrum:latest .",
+    "clean": "npx hardhat clean && rm -rf data",
+    "copy-data": "mkdir -p data && cp ../../data/mainnet/addresses.json ./data",
+    "deploy": "docker push dolomiteprotocol/harvest-finance-compounder-arbitrum:latest",
+    "start": "npx ts-node scripts/index.ts",
+    "start-container": "docker run dolomiteprotocol/harvest-finance-compounder-arbitrum:latest",
     "typechain": "npx hardhat typechain"
   },
   "devDependencies": {
