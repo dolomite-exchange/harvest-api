@@ -10,6 +10,7 @@ const { Cache } = require('../../lib/db/models/cache')
 const { get } = require('lodash')
 const { default: BigNumber } = require('bignumber.js')
 const { formatTimeago } = require('../../lib/utils.js')
+const axios = require('axios')
 
 const initRouter = app => {
   app.use(validateAPIKey(API_KEY))
@@ -225,6 +226,18 @@ const initRouter = app => {
           },
           ...get(allVaults, 'data', {}),
         })
+      }),
+    )
+
+    const harvestApiEndpoint = 'https://api.harvest.finance'
+    const harvestApiKey = 'fc8ad696-7905-4daa-a552-129ede248e33'
+    app.get(
+      '/token-stats',
+      asyncWrap(async (req, res) => {
+        const result = await axios.get(`${harvestApiEndpoint}/token-stats?key=${harvestApiKey}`)
+          .then(response => response.data)
+
+        res.send(result)
       }),
     )
   }
