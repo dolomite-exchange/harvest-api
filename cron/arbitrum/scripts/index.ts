@@ -29,8 +29,6 @@ async function start() {
       );
     } catch(e) {} // eslint-disable-line no-empty
 
-    await sleep(10 * 1000);
-
     try {
       execSync(
         'TS_NODE_TRANSPILE_ONLY=1 npx hardhat --network arbitrum run ./scripts/standalone-runner.ts',
@@ -40,7 +38,6 @@ async function start() {
       );
     } catch(e) {} // eslint-disable-line no-empty
 
-    await sleep(30 * 1000);
     console.log('====================================================================================================');
   }
 }
