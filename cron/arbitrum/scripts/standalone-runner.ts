@@ -38,6 +38,7 @@ const minPlatformFeeProfitInEth = ethers.BigNumber.from('5000000000000000'); // 
 
 const allVaults = Object.keys(addresses.ARBITRUM_ONE);
 
+// TODO switch to use network-based vaults instead of local file. Check for `{ "inactive": true }` on the object
 const vaultIds = allVaults
   .filter(vaultId => addresses.ARBITRUM_ONE[vaultId]?.NewVault)
   .filter(vault => !disableCron(addresses.ARBITRUM_ONE[vault].NewVault));
