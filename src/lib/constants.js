@@ -96,7 +96,7 @@ const ENDPOINT_TYPES = {
 
 const CORS_SETTINGS = {
   origin: ['http://localhost:3000', 'http://localhost:3001']
-    .concat(['https://harvest-finance-arbitrum--private-test-k6opczer.web.app/', 'https://harvest.dolomite.io'])
+    .concat(['https://harvest-finance-arbitrum--private-test-k6opczer.web.app', 'https://harvest.dolomite.io'])
     .concat(process.env.CORS_STRINGS ? process.env.CORS_STRINGS.split(';') : [])
     .concat(
       process.env.CORS_REGEXPS
