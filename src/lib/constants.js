@@ -102,7 +102,7 @@ const regexWhitelist = process.env.CORS_REGEXPS
 
 const CORS_SETTINGS = {
   origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1 || regexWhitelist.some(regex => regex.test(origin))) {
+    if (!origin || whitelist.indexOf(origin) !== -1 || regexWhitelist.some(regex => regex.test(origin))) {
       callback(null, true)
     } else {
       callback(new Error('Not allowed by CORS'))
