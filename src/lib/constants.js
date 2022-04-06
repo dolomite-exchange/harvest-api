@@ -94,15 +94,20 @@ const ENDPOINT_TYPES = {
   EXTERNAL: 'external',
 }
 
+const whitelist = ['http://localhost:3000', 'http://localhost:3001']
+  .concat(process.env.CORS_STRINGS ? process.env.CORS_STRINGS.split(';') : [])
+const regexWhitelist = process.env.CORS_REGEXPS
+  ? process.env.CORS_REGEXPS.split(';').map(regExAsString => new RegExp(regExAsString))
+  : []
+
 const CORS_SETTINGS = {
-  origin: ['http://localhost:3000', 'http://localhost:3001']
-    .concat(['https://harvest-finance-arbitrum--private-test-k6opczer.web.app', 'https://harvest.dolomite.io'])
-    .concat(process.env.CORS_STRINGS ? process.env.CORS_STRINGS.split(';') : [])
-    .concat(
-      process.env.CORS_REGEXPS
-        ? process.env.CORS_REGEXPS.split(';').map(regExAsString => new RegExp(regExAsString))
-        : [],
-    ),
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1 || regexWhitelist.some(regex => regex.test(origin))) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
 }
 
 const UPDATE_LOOP_INTERVAL_MS = parseInt(process.env.UPDATE_LOOP_INTERVAL_MS, 10) || 3600000 // Default: 1 Hour
