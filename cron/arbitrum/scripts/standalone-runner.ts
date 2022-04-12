@@ -269,13 +269,13 @@ async function executeDoHardWork(
   console.log('NEXT Vault:', nextVaultKey);
 
   if (isLastVault) {
-    const hours = 6;
+    const hours = process.env.WAIT_DURATION_LAST_VAULT_HOURS;
     console.log(`Finished harvesting the last vault. Waiting for ${hours} hours for the next iteration`);
-    await sleep(hours * 60 * 60 * 1000);
+    await sleep(Number(hours) * 60 * 60 * 1000);
   } else {
-    const minutes = 1;
-    console.log(`Waiting for ${minutes} minutes`);
-    await sleep(minutes * 60 * 1000);
+    const seconds = 15;
+    console.log(`Waiting for ${seconds} seconds`);
+    await sleep(seconds * 1000);
   }
 }
 
