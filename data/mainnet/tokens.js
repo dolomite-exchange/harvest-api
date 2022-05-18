@@ -6607,14 +6607,10 @@ module.exports = {
     },
     estimateApyFunctions: [
       {
-        type: ESTIMATED_APY_TYPES.CRV_GENERAL,
+        type: ESTIMATED_APY_TYPES.ARBITRUM_CURVE,
         params: [
-          'Crv2Pool_arbitrum',
-          addresses.ARBITRUM_ONE.Crv2Pool_Strategy.Gauge,
-          addresses.ARBITRUM_ONE.Crv2Pool_Strategy.Underlying,
+          addresses.ARBITRUM_ONE.Crv2Pool,
           arbitrumProfitSharingPercent,
-          CHAINS_ID.ARBITRUM_ONE,
-          addresses.ARBITRUM_ONE.Crv2Pool_Strategy.RootChainGauge,
         ],
       },
     ],
@@ -6642,14 +6638,10 @@ module.exports = {
     },
     estimateApyFunctions: [
       {
-        type: ESTIMATED_APY_TYPES.CRV_GENERAL,
+        type: ESTIMATED_APY_TYPES.ARBITRUM_CURVE,
         params: [
-          'CrvEursUsd_arbitrum',
-          addresses.ARBITRUM_ONE.CrvEursUsd_Strategy.Gauge,
-          addresses.ARBITRUM_ONE.CrvEursUsd_Strategy.Underlying,
+          addresses.ARBITRUM_ONE.CrvEursUsdPool,
           arbitrumProfitSharingPercent,
-          CHAINS_ID.ARBITRUM_ONE,
-          addresses.ARBITRUM_ONE.CrvEursUsd_Strategy.RootChainGauge,
         ],
       },
     ],
@@ -6677,14 +6669,10 @@ module.exports = {
     },
     estimateApyFunctions: [
       {
-        type: ESTIMATED_APY_TYPES.CRV_GENERAL,
+        type: ESTIMATED_APY_TYPES.ARBITRUM_CURVE,
         params: [
-          'CrvRenWbtc_arbitrum',
-          addresses.ARBITRUM_ONE.CrvRenWbtc_Strategy.Gauge,
-          addresses.ARBITRUM_ONE.CrvRenWbtc_Strategy.Underlying,
+          addresses.ARBITRUM_ONE.CrvRenWbtcPool,
           arbitrumProfitSharingPercent,
-          CHAINS_ID.ARBITRUM_ONE,
-          addresses.ARBITRUM_ONE.CrvRenWbtc_Strategy.RootChainGauge,
         ],
       },
     ],
@@ -6712,14 +6700,10 @@ module.exports = {
     },
     estimateApyFunctions: [
       {
-        type: ESTIMATED_APY_TYPES.CRV_GENERAL,
+        type: ESTIMATED_APY_TYPES.ARBITRUM_CURVE,
         params: [
-          'CrvTriCrypto_arbitrum',
-          addresses.ARBITRUM_ONE.CrvTriCrypto_Strategy.Gauge,
-          addresses.ARBITRUM_ONE.CrvTriCrypto_Strategy.Underlying,
+          addresses.ARBITRUM_ONE.CrvTriCryptoPool,
           arbitrumProfitSharingPercent,
-          CHAINS_ID.ARBITRUM_ONE,
-          addresses.ARBITRUM_ONE.CrvTriCrypto_Strategy.RootChainGauge,
         ],
       },
     ],
