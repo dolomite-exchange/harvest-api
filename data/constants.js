@@ -40,6 +40,7 @@ const VAULT_CATEGORIES_NAMES = {
   INACTIVE: 'Inactive',
   INACTIVE_BSC: 'Inactive',
   INACTIVE_POLYGON: 'Inactive',
+  INACTIVE_ARBITRUM: 'Inactive',
   LIQUIDITY: 'Uniswap V2',
   SUSHI: 'Sushiswap',
   STABLECOINS: 'Stablecoins',
