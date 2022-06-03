@@ -6830,7 +6830,7 @@ module.exports = {
   Sushi_ETHDAI_arbitrum: {
     chain: CHAINS_ID.ARBITRUM_ONE,
     category: VAULT_CATEGORIES_IDS.SUSHI,
-    logoUrl: ['./icons/eth.png', './icons/dai.png'],
+    logoUrl: ['./icons/dai.png', './icons/eth.png'],
     apyIconUrls: ['./icons/sushi.png'],
     apyTokenSymbols: ['SUSHI'],
     displayName: 'SushiSwap: ETH-DAI',
@@ -6896,7 +6896,7 @@ module.exports = {
   Sushi_ETHMIM_arbitrum: {
     chain: CHAINS_ID.ARBITRUM_ONE,
     category: VAULT_CATEGORIES_IDS.SUSHI,
-    logoUrl: ['./icons/eth.png', './icons/mim.png'],
+    logoUrl: ['./icons/mim.png', './icons/eth.png'],
     apyIconUrls: ['./icons/sushi.png', './icons/spell.png'],
     apyTokenSymbols: ['SUSHI', 'SPELL'],
     displayName: 'Sushi: ETH-MIM',
