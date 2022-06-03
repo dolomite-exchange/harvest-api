@@ -51,7 +51,11 @@ const getPrice = async (contractAddress, firstToken, secondToken) => {
       allFirstAssetInWei = new BigNumber(await web3Instance.eth.getBalance(contractAddress))
       firstToken = 'WETH'
     } else {
-      const firstInstance = new web3Instance.eth.Contract(abi, tokens[firstToken].tokenAddress)
+      const tokenAddress = tokens[firstToken].tokenAddress
+      if (!tokenAddress) {
+        throw new Error('firstToken address could not be found')
+      }
+      const firstInstance = new web3Instance.eth.Contract(abi, tokenAddress)
       allFirstAssetInWei = new BigNumber(await getBalance(contractAddress, firstInstance))
     }
 
@@ -59,7 +63,11 @@ const getPrice = async (contractAddress, firstToken, secondToken) => {
       allSecondAssetInWei = new BigNumber(await web3Instance.eth.getBalance(contractAddress))
       secondToken = 'wBNB'
     } else {
-      const secondInstance = new web3Instance.eth.Contract(abi, tokens[secondToken].tokenAddress)
+      const tokenAddress = tokens[secondToken].tokenAddress
+      if (!tokenAddress) {
+        throw new Error('secondToken address could not be found')
+      }
+      const secondInstance = new web3Instance.eth.Contract(abi, tokenAddress)
       allSecondAssetInWei = new BigNumber(await getBalance(contractAddress, secondInstance))
     }
     const tokenInstance = new web3Instance.eth.Contract(abi, contractAddress)
