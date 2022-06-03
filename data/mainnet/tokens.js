@@ -6830,7 +6830,7 @@ module.exports = {
   Sushi_ETHDAI_arbitrum: {
     chain: CHAINS_ID.ARBITRUM_ONE,
     category: VAULT_CATEGORIES_IDS.SUSHI,
-    logoUrl: './icons/eth_dai.png',
+    logoUrl: ['./icons/eth.png', './icons/dai.png'],
     apyIconUrls: ['./icons/sushi.png'],
     apyTokenSymbols: ['SUSHI'],
     displayName: 'SushiSwap: ETH-DAI',
@@ -6852,7 +6852,7 @@ module.exports = {
   Sushi_ETHGOHM_arbitrum: {
     chain: CHAINS_ID.ARBITRUM_ONE,
     category: VAULT_CATEGORIES_IDS.SUSHI,
-    logoUrl: './icons/eth_gohm.png',
+    logoUrl: ['./icons/ohm.png', './icons/eth.png'],
     apyIconUrls: ['./icons/sushi.png', './icons/ohm.png'],
     apyTokenSymbols: ['SUSHI', 'GOHM'],
     displayName: 'SushiSwap: ETH-GOHM',
@@ -6874,7 +6874,7 @@ module.exports = {
   Sushi_ETHMAGIC_arbitrum: {
     chain: CHAINS_ID.ARBITRUM_ONE,
     category: VAULT_CATEGORIES_IDS.SUSHI,
-    logoUrl: './icons/eth_magic.png',
+    logoUrl: ['./icons/magic.png', './icons/eth.png'],
     apyIconUrls: ['./icons/sushi.png', './icons/magic.png'],
     apyTokenSymbols: ['SUSHI', 'MAGIC'],
     displayName: 'Sushi: ETH-MAGIC',
@@ -6896,7 +6896,7 @@ module.exports = {
   Sushi_ETHMIM_arbitrum: {
     chain: CHAINS_ID.ARBITRUM_ONE,
     category: VAULT_CATEGORIES_IDS.SUSHI,
-    logoUrl: './icons/eth_mim.png',
+    logoUrl: ['./icons/eth.png', './icons/mim.png'],
     apyIconUrls: ['./icons/sushi.png', './icons/spell.png'],
     apyTokenSymbols: ['SUSHI', 'SPELL'],
     displayName: 'Sushi: ETH-MIM',
@@ -6918,7 +6918,7 @@ module.exports = {
   Sushi_ETHSPELL_arbitrum: {
     chain: CHAINS_ID.ARBITRUM_ONE,
     category: VAULT_CATEGORIES_IDS.SUSHI,
-    logoUrl: './icons/eth_spell.png',
+    logoUrl: ['./icons/spell.png', './icons/eth.png'],
     apyIconUrls: ['./icons/sushi.png', './icons/spell.png'],
     apyTokenSymbols: ['SUSHI', 'SPELL'],
     displayName: 'Sushi: ETH-SPELL',
@@ -6940,7 +6940,7 @@ module.exports = {
   Sushi_ETHSUSHI_arbitrum: {
     chain: CHAINS_ID.ARBITRUM_ONE,
     category: VAULT_CATEGORIES_IDS.SUSHI,
-    logoUrl: './icons/sushi-eth.png',
+    logoUrl: ['./icons/sushi.png', './icons/eth.png'],
     apyIconUrls: ['./icons/sushi.png'],
     apyTokenSymbols: ['SUSHI'],
     displayName: 'Sushi: ETH-SUSHI',
