@@ -2044,6 +2044,7 @@
       "RewardPool": "0xeA8DfEE1898a7e0a59f7527F076106d7e44c2176"
     },
     "StargateUSDT_Strategy": {
+      "doHardWork": false,
       "Underlying": "0xB6CfcF89a7B22988bfC96632aC2A9D6daB60d641",
       "NewVault": "0x6d8ed5dace7C74e2d83AE09bB29d548c964EEBc5",
       "StrategyContract": "UsdtStargateStrategyMainnet",

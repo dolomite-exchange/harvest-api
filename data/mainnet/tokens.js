@@ -6799,7 +6799,7 @@ module.exports = {
   },
   StargateUSDT_arbitrum: {
     chain: CHAINS_ID.ARBITRUM_ONE,
-    category: VAULT_CATEGORIES_IDS.STABLECOINS,
+    category: VAULT_CATEGORIES_IDS.INACTIVE_ARBITRUM,
     logoUrl: './icons/usdt.png',
     decimals: '6',
     tokenAddress: addresses.ARBITRUM_ONE.StargateUSDT_Strategy.Underlying,
